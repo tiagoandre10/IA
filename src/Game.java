@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Game {
     char white_piece = 'O', black_piece = 'X', blank = ' ';
     char[][] board = new char[8][8];
@@ -24,8 +26,32 @@ public class Game {
         }
     }
 
-    public static void main(String[] args) {
-        Game temp = new Game();
-        temp.PrintBoard();
+    public void PlayerPlayer(Game game, int player) {
+        Scanner stdin = new Scanner(System.in);
+
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        game.PrintBoard();
+        System.out.print("\n(PLAYER " + player + ")\n\n" +
+                "Piece to move: ");
+        String move = stdin.next();
+        System.out.print("Piece destination: ");
+        String play = stdin.next();
+        System.out.println("Play: " + move + " -> " + play);
+    }
+
+    public void PlayerComputer(Game game) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        game.PrintBoard();
+    }
+
+    public void ComputerComputer(Game game) {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        game.PrintBoard();
     }
 }
