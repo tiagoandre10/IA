@@ -1,6 +1,6 @@
 # Lines Of Action
 
-IA Project of Group 57_2F.
+## IA Project of Group 57_2F.
 
 Group members:
 
