@@ -1,57 +1,66 @@
+package LOA;
+
 import java.util.*;
+import static LOA.Board.*;
+import static LOA.Rules.*;
 
 public class Game {
-    char white_piece = 'O', black_piece = 'X', blank = ' ';
-    char[][] board = new char[8][8];
-
     Game() {
-        for(int i = 0; i < 8; i++)
-            for(int j = 0; j < 8; j++) {
-                if((i == 0 || i == 7) && (j >= 1 && j <= 6))
-                    board[i][j] = black_piece;
-                else if((j == 0 || j == 7) && (i >= 1 && i <= 6))
-                    board[i][j] = white_piece;
-                else
-                    board[i][j] = blank;
-            }
+        initialize();
     }
 
-    public void PrintBoard() {
-        System.out.println("    A   B   C   D   E   F   G   H");
-        for(int i = 0; i < 8; i++) {
-            System.out.print((char)(56-i) + " | ");
-            for(int j = 0; j < 8; j++)
-                System.out.print(board[i][j] + " | ");
-            System.out.println();
+    static void PlayerPlayer(Game game) {
+        Scanner stdin = new Scanner(System.in);
+        int player = 1;
+        String move, play;
+
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
+        while(!GameOver()) {
+            status();
+            System.out.print("\n(PLAYER " + player + ")\n\n" +
+                    "Piece to move: ");
+            move = stdin.next();
+            System.out.print("Piece destination: ");
+            play = stdin.next();
+
+            while(!InBounds(GetColumn(move), GetRow(move)) && !InBounds(GetColumn(play), GetRow(play))) {
+                System.out.print("\nPlay out of bounds! Try again!" +
+                        "Piece to move: ");
+                move = stdin.next();
+                System.out.print("Piece destination: ");
+                play = stdin.next();
+            }
+
+            while(!IsLegal(move, play)) {
+                System.out.print("\nInvalid play! Try again!" +
+                        "Piece to move: ");
+                move = stdin.next();
+                System.out.print("Piece destination: ");
+                play = stdin.next();
+            }
+
+            board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
+            board[GetRow(move)][GetColumn(move)] = -1;
+
+            System.out.println("Play: " + move + " -> " + play);
+
+            if(player == 1)
+                player = 2;
+
+            else
+                player = 1;
         }
     }
 
-    public void PlayerPlayer(Game game, int player) {
-        Scanner stdin = new Scanner(System.in);
-
+    static void PlayerComputer() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-
-        game.PrintBoard();
-        System.out.print("\n(PLAYER " + player + ")\n\n" +
-                "Piece to move: ");
-        String move = stdin.next();
-        System.out.print("Piece destination: ");
-        String play = stdin.next();
-        System.out.println("Play: " + move + " -> " + play);
     }
 
-    public void PlayerComputer(Game game) {
+    static void ComputerComputer() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-
-        game.PrintBoard();
-    }
-
-    public void ComputerComputer(Game game) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-        game.PrintBoard();
     }
 }

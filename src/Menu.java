@@ -1,7 +1,10 @@
-import java.util.*;
+package LOA;
 
-public class Menu extends Game {
-    Menu() {
+import java.util.*;
+import static LOA.Game.*;
+
+public class Menu {
+     static void menu() {
         Scanner stdin = new Scanner(System.in);
 
         System.out.print("\033[H\033[2J");
@@ -17,15 +20,14 @@ public class Menu extends Game {
                                 
                 Option:\s""");
 
-        Game game = new Game();
-
         while(true) {
             int option = stdin.nextInt();
+            Game game = new Game();
 
             switch (option) {
-                case 1 -> PlayerPlayer(game, 1);
-                case 2 -> PlayerComputer(game);
-                case 3 -> ComputerComputer(game);
+                case 1 -> PlayerPlayer(game);
+                case 2 -> PlayerComputer();
+                case 3 -> ComputerComputer();
                 case 4 -> System.exit(0);
                 default -> System.out.print("Invalid option!\n" +
                         "Option: ");
