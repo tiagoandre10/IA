@@ -1,4 +1,4 @@
-package LOA;
+package linesofaction;
 
 enum Direction {
     NOWHERE(0, 0),
