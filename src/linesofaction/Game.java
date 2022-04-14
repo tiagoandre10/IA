@@ -1,8 +1,8 @@
-package LOA;
+package linesofaction;
 
 import java.util.*;
-import static LOA.Board.*;
-import static LOA.Rules.*;
+import static linesofaction.Board.*;
+import static linesofaction.Rules.*;
 
 public class Game {
     Game() {
