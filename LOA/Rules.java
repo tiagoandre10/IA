@@ -1,7 +1,12 @@
 package LOA;
 
+import LOA.graph.Graph;
+
+import java.util.List;
+
 import static LOA.Direction.*;
 import static LOA.Board.*;
+import static LOA.Game.*;
 
 public class Rules {
     static int GetColumn(String move) {
@@ -96,5 +101,15 @@ public class Rules {
         return true;
     }
 
-    static boolean GameOver() {return false;}
+    static boolean GameOver() {
+      List<Graph> gameGraphs = getGraphs();
+      for (int i = 0; i < gameGraphs.size(); i++){
+        if (gameGraphs.get(i).getFirstNode().getValue() > 0 && gameGraphs.get(i).getFirstNode().getValue() < 13 && gameGraphs.get(i).getNodes().size() == getWhitePieces()){
+          System.out.println("White team won the game!");
+        }
+        else if (gameGraphs.get(i).getFirstNode().getValue() > 12 && gameGraphs.get(i).getFirstNode().getValue() < 25 && gameGraphs.get(i).getNodes().size() == getBlackPieces()){
+          System.out.println("Black team won the game!");
+        }
+      }
+      return false;}
 }
