@@ -1,4 +1,4 @@
-package LOA.graph;
+package src.linesofaction.graph;
 
 import java.util.ArrayList;
 import java.util.List;

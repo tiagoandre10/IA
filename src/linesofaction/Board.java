@@ -1,4 +1,4 @@
-package LOA;
+package src.linesofaction;
 
 public class Board {
     static char[] pieces = new char[]{'X', 'O', ' '};

@@ -1,7 +1,7 @@
-package LOA;
+package src.linesofaction;
 
 import java.util.*;
-import static LOA.Game.*;
+import static src.linesofaction.Game.*;
 
 public class Menu {
      static void menu() {

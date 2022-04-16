@@ -1,11 +1,11 @@
-package LOA;
+package src.linesofaction;
 
-import LOA.graph.Graph;
-import LOA.graph.Node;
+import src.linesofaction.graph.Graph;
+import src.linesofaction.graph.Node;
 
 import java.util.*;
-import static LOA.Board.*;
-import static LOA.Rules.*;
+import static src.linesofaction.Board.*;
+import static src.linesofaction.Rules.*;
 
 public class Game {
 

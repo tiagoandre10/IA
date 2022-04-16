@@ -1,12 +1,10 @@
-package LOA;
+package src.linesofaction;
 
-import LOA.graph.Graph;
+import src.linesofaction.graph.Graph;
 
 import java.util.List;
 
-import static LOA.Direction.*;
-import static LOA.Board.*;
-import static LOA.Game.*;
+import static src.linesofaction.Game.*;
 
 public class Rules {
     static int GetColumn(String move) {
@@ -41,30 +39,30 @@ public class Rules {
                     col--;
                     row--;
 
-                    if(dir == NOWHERE)
-                        return (!(board[row][col] == -1) ? 1 : 0);
+                    if(dir == Direction.NOWHERE)
+                        return (!(Board.board[row][col] == -1) ? 1 : 0);
 
-                    else if(dir == S || dir == N) {
+                    else if(dir == Direction.S || dir == Direction.N) {
                         for(int j = 0; j < 8; j++)
-                            if(!(board[j][col] == -1))
+                            if(!(Board.board[j][col] == -1))
                                 count++;
                     }
 
-                    else if (dir == E || dir == W) {
+                    else if (dir == Direction.E || dir == Direction.W) {
                         for(int j = 0; j < 8; j++)
-                            if(!(board[row][j] == -1))
+                            if(!(Board.board[row][j] == -1))
                                 count++;
                      }
 
-                    else if (dir == NE || dir == SW) {
+                    else if (dir == Direction.NE || dir == Direction.SW) {
                         for(int j = -Math.min(col, row); j <= Math.min(7 - col, 7 - row); j++)
-                            if(!(board[row + j][col + j] == -1))
+                            if(!(Board.board[row + j][col + j] == -1))
                                 count++;
                     }
 
-                    else if (dir == NW || dir == SE) {
+                    else if (dir == Direction.NW || dir == Direction.SE) {
                         for (int j = -Math.min(col, 7 - row); j <= Math.min(7 - col, row); j++)
-                            if (!(board[row -j][col + j] == -1))
+                            if (!(Board.board[row -j][col + j] == -1))
                                 count++;
                     }
                 }
@@ -86,10 +84,10 @@ public class Rules {
             for (int i = 1; i <= 7; i++) {
                 if (dCol == dir.dir_col * i && dRow == dir.dir_row * i) {
                     for (int j = 1; j < i; j++) {
-                        if (board[new_row][new_col] == 1 && board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 0)
+                        if (Board.board[new_row][new_col] == 1 && Board.board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 0)
                             return true;
 
-                        if (board[new_row][new_col] == 0 && board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 1)
+                        if (Board.board[new_row][new_col] == 0 && Board.board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 1)
                             return true;
                     }
 

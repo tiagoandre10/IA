@@ -1,6 +1,6 @@
-package LOA;
+package src.linesofaction;
 
-import static LOA.Menu.*;
+import static src.linesofaction.Menu.*;
 
 public class LinesOfAction {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package LOA.graph;
+package src.linesofaction.graph;
 
 public class Edge {
   int _dest;
