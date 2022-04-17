@@ -1,11 +1,10 @@
 package src.linesofaction;
 
-import src.linesofaction.graph.Graph;
-import src.linesofaction.graph.Node;
-
 import java.util.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Rules.*;
+import src.linesofaction.graph.Graph;
+import src.linesofaction.graph.Node;
 
 public class Game {
 
@@ -17,7 +16,7 @@ public class Game {
 
   Game() {
     initialize();
-    startGraphs();
+    //startGraphs();
   }
 
   public static List<Graph> getGraphs(){
@@ -164,14 +163,14 @@ public class Game {
     int row = GetRow(move);
     int piece = board[row][column];
     //Removes the piece from the graph from which it belonged
-    for (int i = 0; i < _graphs.size(); i++){
-      _graphs.get(i).contains(piece);
+    for (Graph value : _graphs) {
+      value.contains(piece);
     }
 
     //Checks if there is any other pieces in its surroundings
     // DUVIDA -> player 1 é o branco?????????????????????????????????????????????????????
     List<Integer> surroundings = new ArrayList<>();
-    int aux = 0;
+    int aux;
     if(0 < piece && piece < 12){
       aux = 1;
     }
@@ -260,17 +259,21 @@ public class Game {
           System.out.print("Piece destination: ");
           play = stdin.next();
 
-          while(!InBounds(GetColumn(move), GetRow(move)) && !InBounds(GetColumn(play), GetRow(play))) {
-              System.out.print("\nPlay out of bounds! Try again!" +
-                      " Piece to move: ");
+          while(InBounds(GetColumn(move), GetRow(move)) && InBounds(GetColumn(play), GetRow(play))) {
+              System.out.print("""
+
+                      Play out of bounds! Try again!
+                       Piece to move:\s""");
               move = stdin.next();
               System.out.print("Piece destination: ");
               play = stdin.next();
           }
 
           while(!IsLegal(move, play)) {
-              System.out.print("\nInvalid play! Try again!" +
-                      " Piece to move: ");
+              System.out.print("""
+
+                      Invalid play! Try again!
+                      Piece to move:\s""");
               move = stdin.next();
               System.out.print("Piece destination: ");
               play = stdin.next();
@@ -278,10 +281,10 @@ public class Game {
 
           board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
           board[GetRow(move)][GetColumn(move)] = -1;
-          readjustGraphs(move);
-          gameFinished = GameOver();
+          //readjustGraphs(move);
+          //gameFinished = GameOver();
 
-          System.out.println("Play: " + move + " -> " + play);
+          System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
 
           if(player == 1)
               player = 2;
