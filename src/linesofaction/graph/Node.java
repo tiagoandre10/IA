@@ -1,13 +1,9 @@
 package src.linesofaction.graph;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Node {
   int _value;
   int _team;
   int _graph;
-  List<Edge> _adj = new ArrayList<>();
 
   public Node(int value)  {
     _value = value;

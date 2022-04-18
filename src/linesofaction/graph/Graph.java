@@ -38,8 +38,4 @@ public class Graph {
     }
   }
 
-  public void addEdge(Edge edge){
-    //to complete
-  }
-
 }

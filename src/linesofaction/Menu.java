@@ -10,15 +10,15 @@ public class Menu {
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
-        System.out.print("""
-                %----------  LINES OF ACTION  ----------%
-                                
-                1. Player vs Player
-                2. Player vs Computer
-                3. Computer vs Computer
-                4. Exit
-                                
-                Option:\s""");
+        System.out.println("  ");
+        System.out.println("%----------  LINES OF ACTION  ----------%");
+        System.out.println("  ");
+        System.out.println("1. Player vs Player");
+        System.out.println("2. Player vs Computer");
+        System.out.println("3. Computer vs Computer");
+        System.out.println("4. Exit");
+        System.out.println("  ");
+        System.out.println("Option:\s");
 
         while(true) {
             int option = stdin.nextInt();
