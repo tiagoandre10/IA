@@ -1,13 +1,11 @@
 package src.linesofaction;
 
 import java.util.*;
+import src.linesofaction.graph.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Rules.*;
-import src.linesofaction.graph.Graph;
-import src.linesofaction.graph.Node;
 
 public class Game {
-
   static List<Graph> _graphs = new ArrayList<>();
   static List<Node> _nodes = new ArrayList<>();
   static int _blackPieces = 12;
@@ -162,55 +160,55 @@ public class Game {
     int column = GetColumn(move);
     int row = GetRow(move);
     int piece = board[row][column];
+
     //Removes the piece from the graph from which it belonged
-    for (Graph value : _graphs) {
+    for (Graph value : _graphs)
       value.contains(piece);
-    }
 
     //Checks if there is any other pieces in its surroundings
     // DUVIDA -> player 1 é o branco?????????????????????????????????????????????????????
     List<Integer> surroundings = new ArrayList<>();
     int aux;
-    if(0 < piece && piece < 12){
-      aux = 1;
-    }
-    else{
-      aux = 2;
-    }
-    //Up move
-    if( (0 < board[row+1][column] && board[row+1][column] < 13 && aux ==1) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux ==2)){
-      surroundings.add(board[row+1][column]);
-    }
-    //Down move
-    if( (0 < board[row-1][column] && board[row-1][column] < 13 && aux ==1) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux ==2)){
-      surroundings.add(board[row-1][column]);
-    }
-    //Diagonal down right move
-    if( (0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux ==1) || (12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux ==2)){
-      surroundings.add(board[row-1][column+1]);
-    }
-    //Diagonal down left move
-    if( (0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux ==1) || (12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux ==2)){
-      surroundings.add(board[row-1][column-1]);
-    }
-    //Left move
-    if( (0 < board[row][column-1] && board[row][column-1] < 13 && aux ==1) || (12 < board[row][column-1] && board[row][column-1] < 25 && aux ==2)){
-      surroundings.add(board[row][column-1]);
-    }
-    //Right move
-    if( (0 < board[row][column+1] && board[row][column+1] < 13 && aux ==1) || (12 < board[row][column+1] && board[row][column+1] < 25 && aux ==2)){
-      surroundings.add(board[row][column+1]);
-    }
-    //Diagonal up right move
-    if( (0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux ==1) || (12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux ==2)){
-      surroundings.add(board[row+1][column+1]);
-    }
-    //Diagonal up left move
-    if( (0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==1) || (12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==2)){
-      surroundings.add(board[row+1][column-1]);
-    }
 
-    if(surroundings.size() == 0){
+    if(0 < piece && piece < 12)
+      aux = 1;
+
+    else
+      aux = 2;
+
+    //Up move
+    if( (0 < board[row+1][column] && board[row+1][column] < 13 && aux == 1) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux == 2))
+      surroundings.add(board[row+1][column]);
+
+    //Down move
+    if( (0 < board[row-1][column] && board[row-1][column] < 13 && aux == 1) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux == 2))
+      surroundings.add(board[row-1][column]);
+
+    //Diagonal down right move
+    if( (0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux == 1) || (12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux == 2))
+      surroundings.add(board[row-1][column+1]);
+
+    //Diagonal down left move
+    if( (0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux == 1) || (12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux == 2))
+      surroundings.add(board[row-1][column-1]);
+
+    //Left move
+    if( (0 < board[row][column-1] && board[row][column-1] < 13 && aux == 1) || (12 < board[row][column-1] && board[row][column-1] < 25 && aux == 2))
+      surroundings.add(board[row][column-1]);
+
+    //Right move
+    if( (0 < board[row][column+1] && board[row][column+1] < 13 && aux == 1) || (12 < board[row][column+1] && board[row][column+1] < 25 && aux == 2))
+      surroundings.add(board[row][column+1]);
+
+    //Diagonal up right move
+    if( (0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux == 1) || (12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux == 2))
+      surroundings.add(board[row+1][column+1]);
+
+    //Diagonal up left move
+    if( (0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==1) || (12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==2))
+      surroundings.add(board[row+1][column-1]);
+
+    if(surroundings.size() == 0) {
       _totalGraphs++;
       Graph newGraph = new Graph(1, _totalGraphs);
       Node node = _nodes.get(piece-1);
@@ -218,31 +216,34 @@ public class Game {
       _graphs.add(newGraph);
     }
 
-    else{
+    else {
       int firstSurrounding = surroundings.get(0);
       Node node = _nodes.get(firstSurrounding-1);
       int graph = node.getGraph();
+
       //Puts the piece in the graph of the first surrounding
       _graphs.get(graph-1).addNode(_nodes.get(piece-1));
       surroundings.remove(surroundings.get(0));
+
       //Joins the other surroundings in the same graph
-      while(surroundings.size() != 0){
+      while(surroundings.size() != 0) {
         int nextSurrounding = surroundings.get(0);
         Node nextNode = _nodes.get(nextSurrounding-1);
         int nextGraph = nextNode.getGraph();
-        for ( int i = 0; i < _graphs.get(nextGraph-1).getNodes().size(); i++){
+
+        for ( int i = 0; i < _graphs.get(nextGraph-1).getNodes().size(); i++) {
           //Adds the node to the previous graph
           _graphs.get(graph-1).addNode(nextNode);
           //Removes the node from the current graph
           _graphs.get(nextGraph-1).removeNode(nextNode);
         }
+
         surroundings.remove(surroundings.get(0));
       }
     }
-
   }
 
-  static void PlayerPlayer(Game game) {
+  static void PlayerPlayer() {
       Scanner stdin = new Scanner(System.in);
       int player = 1;
       String move, play;
@@ -251,6 +252,8 @@ public class Game {
       System.out.print("\033[H\033[2J");
       System.out.flush();
 
+      new Game();
+
       while(!gameFinished) {
           status();
           System.out.print("\n(PLAYER " + player + ")\n\n" +
@@ -258,16 +261,6 @@ public class Game {
           move = stdin.next();
           System.out.print("Piece destination: ");
           play = stdin.next();
-
-          while(InBounds(GetColumn(move), GetRow(move)) && InBounds(GetColumn(play), GetRow(play))) {
-              System.out.print("""
-
-                      Play out of bounds! Try again!
-                       Piece to move:\s""");
-              move = stdin.next();
-              System.out.print("Piece destination: ");
-              play = stdin.next();
-          }
 
           while(!IsLegal(move, play)) {
               System.out.print("""

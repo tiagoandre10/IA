@@ -1,5 +1,10 @@
 package src.linesofaction.graph;
 
+<<<<<<< HEAD
+=======
+import java.util.*;
+
+>>>>>>> db64e951791c4905f60fef8a19be1eb1a60ef88e
 public class Node {
   int _value;
   int _team;
@@ -7,12 +12,12 @@ public class Node {
 
   public Node(int value)  {
     _value = value;
-    if (value <= 12){
+
+    if(value <= 12)
       _team = 1;
-    }
-    else{
+
+    else
       _team = 2;
-    }
   }
 
   public Node(int value, int graph) {
@@ -20,15 +25,15 @@ public class Node {
     _graph = graph;
   }
 
-  public void setGraph(int graph){
+  public void setGraph(int graph) {
     _graph = graph;
   }
 
-  public int getValue(){
+  public int getValue() {
     return _value;
   }
 
-  public int getGraph(){
+  public int getGraph() {
     return _graph;
   }
 }
