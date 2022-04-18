@@ -22,10 +22,9 @@ public class Menu {
 
         while(true) {
             int option = stdin.nextInt();
-            Game game = new Game();
 
             switch (option) {
-                case 1 -> PlayerPlayer(game);
+                case 1 -> PlayerPlayer();
                 case 2 -> PlayerComputer();
                 case 3 -> ComputerComputer();
                 case 4 -> System.exit(0);

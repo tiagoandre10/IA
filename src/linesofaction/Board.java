@@ -17,7 +17,7 @@ public class Board {
 
                 else if((j == 0 || j == 7) && (i >= 1 && i <= 6)) {
                     board[i][j] = 0;
-                    // board[i][j] = whiteCounter;
+                    //board[i][j] = whiteCounter;
                     //whiteCounter++;
                 }
 
@@ -32,14 +32,9 @@ public class Board {
             System.out.print((char)(56-i) + " | ");
             for(int j = 0; j < 8; j++) {
                 if(board[i][j] == 1)
-                //if(board[i][j] > 12 && board[i][j] < 25)
-                    //System.out.print( board[i][j] + " | ");
                     System.out.print(pieces[0] + " | ");
 
-
                 else if(board[i][j] == 0)
-                //else if(board[i][j] > 0  && board[i][j] < 13)
-                    //System.out.print( board[i][j] + " | ");
                     System.out.print(pieces[1] + " | ");
 
                 else

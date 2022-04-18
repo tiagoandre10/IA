@@ -1,7 +1,7 @@
 package src.linesofaction;
 
-import java.util.List;
-import src.linesofaction.graph.Graph;
+import java.util.*;
+import src.linesofaction.graph.*;
 import static src.linesofaction.Game.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Direction.*;
@@ -13,10 +13,6 @@ public class Rules {
 
     static int GetRow(String move) {
         return Math.abs(move.charAt(1) - '0' - 8);
-    }
-
-    static boolean InBounds(int row, int col) {
-        return 1 > row || row > 8 || 1 > col || col > 8;
     }
 
     static boolean IsLegal(String move, String play) {
@@ -34,12 +30,11 @@ public class Rules {
         int dCol = GetColumn(play) - GetColumn(move);
         int row = GetRow(move), col = GetColumn(move), count = 0;
 
-        for(Direction dir : Direction.values()) {
-            for(int i = 1; i <= 7; i++) {
-                if(dRow == dir.dir_row * i && dCol == dir.dir_col * i) {
+        for(Direction dir : Direction.values())
+            for(int i = 1; i <= 7; i++)
+                if(dRow == dir.row * i && dCol == dir.col * i) {
                     row--;
                     col--;
-                    System.out.println(dir);
 
                     if(dir == NOWHERE)
                         return (!(board[row][col] == -1) ? 1 : 0);
@@ -68,8 +63,6 @@ public class Rules {
                                 count++;
                     }
                 }
-            }
-        }
 
         return count;
     }
@@ -78,36 +71,41 @@ public class Rules {
         if(move.equals(play))
             return true;
 
-        int old_col = GetColumn(move), new_col = GetColumn(play);
         int old_row = GetRow(move), new_row = GetRow(play);
-        int dCol = new_col - old_col, dRow = new_row - old_row;
+        int old_col = GetColumn(move), new_col = GetColumn(play);
+        int dRow = new_row - old_row, dCol = new_col - old_col;
 
-        for(Direction dir : Direction.values()) {
-            for(int i = 1; i <= 7; i++) {
-                if(dRow == dir.dir_row * i && dCol == dir.dir_col * i) {
+        for(Direction dir : Direction.values())
+            for(int i = 1; i <= 7; i++)
+                if(dRow == dir.row * i && dCol == dir.col * i)
                     for(int j = 1; j < i; j++) {
-                        if(board[new_row][new_col] == 1 && board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 0)
+                        if(board[new_row][new_col] == 1 && board[old_row + dir.row * j][old_col + dir.col * j] == 0)
                             return true;
 
-                        if(board[new_row][new_col] == 0 && board[old_row + dir.dir_row * j][old_col + dir.dir_col * j] == 1)
+                        if(board[new_row][new_col] == 0 && board[old_row + dir.row * j][old_col + dir.col * j] == 1)
+                            return true;
+
+                        if(board[new_row][new_col] == 0 && board[old_row + dir.row * j][old_col + dir.col * j] == 0)
+                            return true;
+
+                        if(board[new_row][new_col] == 1 && board[old_row + dir.row * j][old_col + dir.col * j] == 1)
                             return true;
                     }
-                }
-            }
-        }
 
         return false;
     }
 
     static boolean GameOver() {
       List<Graph> gameGraphs = getGraphs();
-        for (Graph gameGraph : gameGraphs) {
-            if (gameGraph.getFirstNode().getValue() > 0 && gameGraph.getFirstNode().getValue() < 13 && gameGraph.getNodes().size() == getWhitePieces()) {
+
+      for(Graph gameGraph : gameGraphs) {
+            if(gameGraph.getFirstNode().getValue() > 0 && gameGraph.getFirstNode().getValue() < 13 && gameGraph.getNodes().size() == getWhitePieces())
                 System.out.println("White team won the game!");
-            } else if (gameGraph.getFirstNode().getValue() > 12 && gameGraph.getFirstNode().getValue() < 25 && gameGraph.getNodes().size() == getBlackPieces()) {
+
+            else if(gameGraph.getFirstNode().getValue() > 12 && gameGraph.getFirstNode().getValue() < 25 && gameGraph.getNodes().size() == getBlackPieces())
                 System.out.println("Black team won the game!");
-            }
-        }
+      }
+
       return false;
     }
 }
