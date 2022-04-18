@@ -16,7 +16,7 @@ public class Rules {
   static int GetRow(String move) {
         return Math.abs(move.charAt(1) - '0' - 8);
     }
-  
+
   static boolean InBounds(int row, int col) {
         return 1 > row || row > 8 || 1 > col || col > 8;
     }
