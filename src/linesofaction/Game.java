@@ -255,35 +255,35 @@ public class Game {
       new Game();
 
       while(!gameFinished) {
-          status();
-          System.out.print("\n(PLAYER " + player + ")\n\n" +
-                  "Piece to move: ");
+        status();
+        System.out.print("\n(PLAYER " + player + ")\n\n");
+        System.out.println("Piece to move: ");
+        move = stdin.next();
+        System.out.print("Piece destination: ");
+        play = stdin.next();
+
+        while(!IsLegal(move, play)) {
+          System.out.println("");
+          System.out.println("");
+          System.out.println("Invalid play! Try again!") ;
+          System.out.println("Piece to move:\s");
           move = stdin.next();
           System.out.print("Piece destination: ");
           play = stdin.next();
+        }
 
-          while(!IsLegal(move, play)) {
-              System.out.print("""
+        board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
+        board[GetRow(move)][GetColumn(move)] = -1;
+        //readjustGraphs(move);
+        //gameFinished = GameOver();
 
-                      Invalid play! Try again!
-                      Piece to move:\s""");
-              move = stdin.next();
-              System.out.print("Piece destination: ");
-              play = stdin.next();
-          }
+        System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
 
-          board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
-          board[GetRow(move)][GetColumn(move)] = -1;
-          //readjustGraphs(move);
-          //gameFinished = GameOver();
+        if(player == 1)
+            player = 2;
 
-          System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
-
-          if(player == 1)
-              player = 2;
-
-          else
-              player = 1;
+        else
+            player = 1;
       }
   }
 
