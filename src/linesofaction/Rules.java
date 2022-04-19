@@ -28,7 +28,8 @@ public class Rules {
     static int PiecesCountAlong(String move, String play) {
         int dRow = GetRow(move) - GetRow(play);
         int dCol = GetColumn(play) - GetColumn(move);
-        int row = GetRow(move), col = GetColumn(move), count = 0;
+        int row = GetRow(move), col = GetColumn(move);
+        int _row = GetRow(play), _col = GetColumn(play), count = 0;
 
         for(Direction dir : Direction.values())
             for(int i = 1; i <= 7; i++)
@@ -39,27 +40,41 @@ public class Rules {
                     if(dir == NOWHERE)
                         return (!(board[row][col] == -1) ? 1 : 0);
 
-                    else if(dir == E || dir == N) {
+                    else if(dir == E || dir == W) {
                         for(int j = 0; j < 8; j++)
-                            if(!(board[row][j] == -1))
+                            if (!(board[j][_col] == -1))
                                 count++;
                     }
 
-                    else if (dir == S || dir == W) {
-                        for(int j = 0; j < 8; j++)
-                            if(!(board[j][col] == -1))
+                    else if (dir == S || dir == N) {
+                        for(int j = 0; j < 8; j++) {
+                            if(!(board[_row][j] == -1))
                                 count++;
+                        }
                      }
 
-                    else if (dir == NE || dir == SE) {
-                        for(int j = -Math.min(row, col); j <= Math.min(7 - row, 7 - col); j++)
-                            if(!(board[row + j][col + j] == -1))
+                    else if (dir == NE) {
+                        for(int j = _row; j <= row + 1; j++)
+                            if (!(board[j][_col--] == -1))
                                 count++;
                     }
 
-                    else if (dir == NW || dir == SW) {
-                        for(int j = -Math.min(7 - row, col); j <= Math.min(row, 7 - col); j++)
-                            if (!(board[row -j][col + j] == -1))
+                    else if (dir == SW) {
+                        col++;
+                        for(int j = row + 1; j <= _row; j++)
+                            if (!(board[j][col--] == -1))
+                                count++;
+                    }
+
+                    else if (dir == NW) {
+                        for(int j = _row; j <= row + 1; j++)
+                            if (!(board[j][_col++] == -1))
+                                count++;
+                    }
+
+                    else if(dir == SE) {
+                        for(int j = row + 1; ++col != 8 && j <= 7; j++)
+                            if (!(board[j][col] == -1))
                                 count++;
                     }
                 }
@@ -79,10 +94,10 @@ public class Rules {
             for(int i = 1; i <= 7; i++)
                 if(dRow == dir.row * i && dCol == dir.col * i)
                     for(int j = 1; j < i; j++) {
-                        if(board[new_row][new_col] == 1 && board[old_row + dir.row * j][old_col + dir.col * j] == 0)
+                        if(board[old_row][old_col] == 0 && board[old_row + dir.row * j][old_col + dir.col * j] == 1)
                             return true;
 
-                        if(board[new_row][new_col] == 0 && board[old_row + dir.row * j][old_col + dir.col * j] == 1)
+                        if(board[old_row][old_col] == 1 && board[old_row + dir.row * j][old_col + dir.col * j] == 0)
                             return true;
 
                         if(board[new_row][new_col] == 0 && board[old_row + dir.row * j][old_col + dir.col * j] == 0)
