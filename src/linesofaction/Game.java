@@ -257,7 +257,7 @@ public class Game {
       while(!gameFinished) {
         status();
         System.out.print("\n(PLAYER " + player + ")\n\n");
-        System.out.println("Piece to move: ");
+        System.out.print("Piece to move: ");
         move = stdin.next();
         System.out.print("Piece destination: ");
         play = stdin.next();
@@ -266,7 +266,7 @@ public class Game {
           System.out.println("");
           System.out.println("");
           System.out.println("Invalid play! Try again!") ;
-          System.out.println("Piece to move:\s");
+          System.out.print("Piece to move: ");
           move = stdin.next();
           System.out.print("Piece destination: ");
           play = stdin.next();

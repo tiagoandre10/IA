@@ -18,17 +18,22 @@ public class Menu {
         System.out.println("3. Computer vs Computer");
         System.out.println("4. Exit");
         System.out.println("  ");
-        System.out.println("Option:\s");
+        System.out.println("Option: ");
 
         while(true) {
             int option = stdin.nextInt();
 
             switch (option) {
-                case 1 -> PlayerPlayer();
-                case 2 -> PlayerComputer();
-                case 3 -> ComputerComputer();
-                case 4 -> System.exit(0);
-                default -> System.out.print("Invalid option!\n" +
+              case 1:
+                PlayerPlayer();
+              case 2:
+                PlayerComputer();
+              case 3:
+                ComputerComputer();
+              case 4:
+                System.exit(0);
+              default:
+                System.out.print("Invalid option!\n" +
                         "Option: ");
             }
 
