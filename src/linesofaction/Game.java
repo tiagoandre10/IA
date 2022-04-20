@@ -166,46 +166,46 @@ public class Game {
       value.contains(piece);
 
     //Checks if there is any other pieces in its surroundings
-    // DUVIDA -> player 1 é o branco?????????????????????????????????????????????????????
+    //Black player is player 1
     List<Integer> surroundings = new ArrayList<>();
     int aux;
 
     if(0 < piece && piece < 12)
-      aux = 1;
-
-    else
       aux = 2;
 
+    else
+      aux = 1;
+
     //Up move
-    if( (0 < board[row+1][column] && board[row+1][column] < 13 && aux == 1) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux == 2))
+    if( (0 < board[row+1][column] && board[row+1][column] < 13 && aux == 2) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux == 1))
       surroundings.add(board[row+1][column]);
 
     //Down move
-    if( (0 < board[row-1][column] && board[row-1][column] < 13 && aux == 1) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux == 2))
+    if( (0 < board[row-1][column] && board[row-1][column] < 13 && aux == 2) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux == 1))
       surroundings.add(board[row-1][column]);
 
     //Diagonal down right move
-    if( (0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux == 1) || (12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux == 2))
+    if( (0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux == 2) || (12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux == 1))
       surroundings.add(board[row-1][column+1]);
 
     //Diagonal down left move
-    if( (0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux == 1) || (12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux == 2))
+    if( (0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux == 2) || (12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux == 1))
       surroundings.add(board[row-1][column-1]);
 
     //Left move
-    if( (0 < board[row][column-1] && board[row][column-1] < 13 && aux == 1) || (12 < board[row][column-1] && board[row][column-1] < 25 && aux == 2))
+    if( (0 < board[row][column-1] && board[row][column-1] < 13 && aux == 2) || (12 < board[row][column-1] && board[row][column-1] < 25 && aux == 1))
       surroundings.add(board[row][column-1]);
 
     //Right move
-    if( (0 < board[row][column+1] && board[row][column+1] < 13 && aux == 1) || (12 < board[row][column+1] && board[row][column+1] < 25 && aux == 2))
+    if( (0 < board[row][column+1] && board[row][column+1] < 13 && aux == 2) || (12 < board[row][column+1] && board[row][column+1] < 25 && aux == 1))
       surroundings.add(board[row][column+1]);
 
     //Diagonal up right move
-    if( (0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux == 1) || (12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux == 2))
+    if( (0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux == 2) || (12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux == 1))
       surroundings.add(board[row+1][column+1]);
 
     //Diagonal up left move
-    if( (0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==1) || (12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==2))
+    if( (0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==2) || (12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==1))
       surroundings.add(board[row+1][column-1]);
 
     if(surroundings.size() == 0) {
