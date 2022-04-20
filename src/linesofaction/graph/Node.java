@@ -1,10 +1,5 @@
 package src.linesofaction.graph;
 
-<<<<<<< HEAD
-=======
-import java.util.*;
-
->>>>>>> db64e951791c4905f60fef8a19be1eb1a60ef88e
 public class Node {
   int _value;
   int _team;

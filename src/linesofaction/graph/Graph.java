@@ -35,10 +35,4 @@ public class Graph {
         _nodes.remove(_nodes.get(i));
   }
 
-<<<<<<< HEAD
-=======
-  public void addEdge(Edge edge) {
-    //to complete
-  }
->>>>>>> db64e951791c4905f60fef8a19be1eb1a60ef88e
 }
