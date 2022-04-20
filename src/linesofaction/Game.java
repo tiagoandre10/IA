@@ -11,10 +11,11 @@ public class Game {
   static int _blackPieces = 12;
   static int _whitePieces = 12;
   static int _totalGraphs = 4;
+  static int _totalMoves = 0;
 
   Game() {
     initialize();
-    //startGraphs();
+    startGraphs();
   }
 
   public static List<Graph> getGraphs(){
@@ -27,6 +28,10 @@ public class Game {
 
   public static int getWhitePieces(){
     return _whitePieces;
+  }
+
+  public static int getTotalMoves(){
+    return _totalMoves;
   }
 
   public void startGraphs(){
@@ -271,11 +276,18 @@ public class Game {
           System.out.print("Piece destination: ");
           play = stdin.next();
         }
+        if (board[GetRow(play)][GetColumn(play)] < 25 && board[GetRow(play)][GetColumn(play)] > 12) {
+          _blackPieces--;
+        }
 
+        if (board[GetRow(play)][GetColumn(play)] < 13 && board[GetRow(play)][GetColumn(play)] > 0) {
+          _whitePieces--;
+        }
         board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
         board[GetRow(move)][GetColumn(move)] = -1;
-        //readjustGraphs(move);
-        //gameFinished = GameOver();
+        readjustGraphs(move);
+        _totalMoves++;
+        gameFinished = GameOver();
 
         System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
 

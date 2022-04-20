@@ -173,6 +173,9 @@ public class Rules {
 
   //Checks to see if a player has won the game
   static boolean GameOver() {
+    if(getTotalMoves() >= 150){
+      System.out.println("It was a draw! Better luck next time!");
+    }
     List<Graph> gameGraphs = getGraphs();
       for (Graph gameGraph : gameGraphs) {
           if (gameGraph.getFirstNode().getValue() > 0 && gameGraph.getFirstNode().getValue() < 13 && gameGraph.getNodes().size() == getWhitePieces()) {
