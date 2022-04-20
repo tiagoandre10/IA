@@ -141,12 +141,12 @@ public class Game {
 
     Graph g4 = new Graph(6, 4);
     //Initial right side of the board with white pieces
-    g2.addNode(node19);
-    g2.addNode(node20);
-    g2.addNode(node21);
-    g2.addNode(node22);
-    g2.addNode(node23);
-    g2.addNode(node24);
+    g4.addNode(node19);
+    g4.addNode(node20);
+    g4.addNode(node21);
+    g4.addNode(node22);
+    g4.addNode(node23);
+    g4.addNode(node24);
 
     node19.setGraph(4);
     node20.setGraph(4);
@@ -182,35 +182,35 @@ public class Game {
       aux = 1;
 
     //Up move
-    if( (0 < board[row+1][column] && board[row+1][column] < 13 && aux == 2) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux == 1))
+    if( (row+1 < 8 && 0 < board[row+1][column] && board[row+1][column] < 13 && aux == 2) || (12 < board[row+1][column] && board[row+1][column] < 25 && aux == 1))
       surroundings.add(board[row+1][column]);
 
     //Down move
-    if( (0 < board[row-1][column] && board[row-1][column] < 13 && aux == 2) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux == 1))
+    if( (row-1 >= 0 && 0 < board[row-1][column] && board[row-1][column] < 13 && aux == 2) || (12 < board[row-1][column] && board[row-1][column] < 25 && aux == 1))
       surroundings.add(board[row-1][column]);
 
     //Diagonal down right move
-    if( (0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux == 2) || (12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux == 1))
+    if( (row-1 >= 0 && column+1 < 8 && 0 < board[row-1][column+1] && board[row-1][column+1] < 13 && aux == 2) || ( row-1 >= 0 && column+1 < 8 && 12 < board[row-1][column+1] && board[row-1][column+1] < 25 && aux == 1))
       surroundings.add(board[row-1][column+1]);
 
     //Diagonal down left move
-    if( (0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux == 2) || (12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux == 1))
+    if( (row-1 >= 0 && column-11 <= 0 && 0 < board[row-1][column-1] && board[row-1][column-1] < 13 && aux == 2) || ( row-1 >= 0 && column-11 <= 0 && 12 < board[row-1][column-1] && board[row-1][column-1] < 25 && aux == 1))
       surroundings.add(board[row-1][column-1]);
 
     //Left move
-    if( (0 < board[row][column-1] && board[row][column-1] < 13 && aux == 2) || (12 < board[row][column-1] && board[row][column-1] < 25 && aux == 1))
+    if( (column-1 >= 0 && 0 < board[row][column-1] && board[row][column-1] < 13 && aux == 2) || (column-1 >= 0 && 12 < board[row][column-1] && board[row][column-1] < 25 && aux == 1))
       surroundings.add(board[row][column-1]);
 
     //Right move
-    if( (0 < board[row][column+1] && board[row][column+1] < 13 && aux == 2) || (12 < board[row][column+1] && board[row][column+1] < 25 && aux == 1))
+    if( (column+1 < 8 && 0 < board[row][column+1] && board[row][column+1] < 13 && aux == 2) || (column+1 < 8 && 12 < board[row][column+1] && board[row][column+1] < 25 && aux == 1))
       surroundings.add(board[row][column+1]);
 
     //Diagonal up right move
-    if( (0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux == 2) || (12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux == 1))
+    if( (row+1 < 8 && column+1 < 8 && 0 < board[row+1][column+1] && board[row+1][column+1] < 13 && aux == 2) || (row+1 < 8 && column+1 < 8 && 12 < board[row+1][column+1] && board[row+1][column+1] < 25 && aux == 1))
       surroundings.add(board[row+1][column+1]);
 
     //Diagonal up left move
-    if( (0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==2) || (12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==1))
+    if( (row+1 < 8 && column-1 >= 0 && 0 < board[row+1][column-1] && board[row+1][column-1] < 13 && aux ==2) || (row+1 < 8 && column-1 >= 0 && 12 < board[row+1][column-1] && board[row+1][column-1] < 25 && aux ==1))
       surroundings.add(board[row+1][column-1]);
 
     if(surroundings.size() == 0) {
@@ -285,7 +285,7 @@ public class Game {
         }
         board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
         board[GetRow(move)][GetColumn(move)] = -1;
-        readjustGraphs(move);
+        readjustGraphs(play);
         _totalMoves++;
         gameFinished = GameOver();
 
