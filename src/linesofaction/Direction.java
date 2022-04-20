@@ -11,10 +11,10 @@ enum Direction {
     SE(-1, 1),
     SW(-1, -1);
 
-    Direction(int row, int col) {
-        dir_row = row;
-        dir_col = col;
+    Direction(int _row, int _col) {
+        row = _row;
+        col = _col;
     }
 
-    final int dir_row, dir_col;
+    final int row, col;
 }

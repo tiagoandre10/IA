@@ -1,7 +1,6 @@
 package src.linesofaction.graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Graph {
   int _id;
@@ -30,16 +29,10 @@ public class Graph {
     _nodes.remove(node);
   }
 
-  public void contains(int nodeId){
-    for (int i = 0; i < _nodes.size(); i++){
-      if (_nodes.get(i).getValue() == nodeId){
+  public void contains(int nodeId) {
+    for(int i = 0; i < _nodes.size(); i++)
+      if(_nodes.get(i).getValue() == nodeId)
         _nodes.remove(_nodes.get(i));
-      }
-    }
-  }
-
-  public void addEdge(Edge edge){
-    //to complete
   }
 
 }

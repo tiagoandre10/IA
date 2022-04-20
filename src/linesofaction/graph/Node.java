@@ -1,22 +1,18 @@
 package src.linesofaction.graph;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Node {
   int _value;
   int _team;
   int _graph;
-  List<Edge> _adj = new ArrayList<>();
 
   public Node(int value)  {
     _value = value;
-    if (value <= 12){
+
+    if(value <= 12)
       _team = 1;
-    }
-    else{
+
+    else
       _team = 2;
-    }
   }
 
   public Node(int value, int graph) {
@@ -24,15 +20,15 @@ public class Node {
     _graph = graph;
   }
 
-  public void setGraph(int graph){
+  public void setGraph(int graph) {
     _graph = graph;
   }
 
-  public int getValue(){
+  public int getValue() {
     return _value;
   }
 
-  public int getGraph(){
+  public int getGraph() {
     return _graph;
   }
 }
