@@ -5,12 +5,15 @@ import static src.linesofaction.Board.*;
 import static src.linesofaction.Rules.*;
 
 public class Game {
-  static int _blackPieces = 12;
-  static int _whitePieces = 12;
+  //static int _blackPieces = 12;
+  //static int _whitePieces = 12;
+  static int _blackPieces = 2;
+  static int _whitePieces = 2;
   static int _totalMoves = 0;
 
   Game() {
-    initialize();
+    //initialize();
+    initializeTester();
   }
 
 
@@ -47,6 +50,21 @@ public class Game {
         move = stdin.next();
         System.out.print("Piece destination: ");
         play = stdin.next();
+
+        boolean differentPlay = false;
+
+        while(!differentPlay){
+          if(move.equals(play)){
+            System.out.println("You cannot stay in the same place! Try again!");
+            System.out.print("Piece to move: ");
+            move = stdin.next();
+            System.out.print("Piece destination: ");
+            play = stdin.next();
+          }
+          else{
+            differentPlay = true;
+          }
+        }
 
         //Checks if the player is trying to move his pieces
         boolean canMove = false;
@@ -88,6 +106,50 @@ public class Game {
           move = stdin.next();
           System.out.print("Piece destination: ");
           play = stdin.next();
+
+          differentPlay = false;
+
+          while(!differentPlay){
+            if(move.equals(play)){
+              System.out.println("You cannot stay in the same place! Try again!");
+              System.out.print("Piece to move: ");
+              move = stdin.next();
+              System.out.print("Piece destination: ");
+              play = stdin.next();
+            }
+            else{
+              differentPlay = true;
+            }
+          }
+
+          //Checks if the player is trying to move his pieces
+          canMove = false;
+          while (!canMove) {
+            int helperPiece = board[GetRow(move)][GetColumn(move)];
+
+            if (player == 1) {
+              if (helperPiece < 13) {
+                System.out.println("You can only move the black pieces! Try again!");
+                System.out.print("Piece to move: ");
+                move = stdin.next();
+                System.out.print("Piece destination: ");
+                play = stdin.next();
+              } else {
+                canMove = true;
+              }
+
+            } else {
+              if (helperPiece < 1 || helperPiece > 12) {
+                System.out.println("You can only move the white pieces! Try again!");
+                System.out.print("Piece to move: ");
+                move = stdin.next();
+                System.out.print("Piece destination: ");
+                play = stdin.next();
+              } else {
+                canMove = true;
+              }
+            }
+          }
         }
 
         //The player 2 (white) took a piece of the enemy

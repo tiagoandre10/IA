@@ -18,7 +18,7 @@ public class Menu {
         System.out.println("3. Computer vs Computer");
         System.out.println("4. Exit");
         System.out.println("  ");
-        System.out.println("Option: ");
+        System.out.print("Option: ");
 
         while(true) {
             int option = stdin.nextInt();
