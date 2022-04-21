@@ -5,15 +5,15 @@ import static src.linesofaction.Board.*;
 import static src.linesofaction.Rules.*;
 
 public class Game {
-  //static int _blackPieces = 12;
-  //static int _whitePieces = 12;
-  static int _blackPieces = 2;
-  static int _whitePieces = 2;
+  static int _blackPieces = 12;
+  static int _whitePieces = 12;
+  //static int _blackPieces = 2;
+  //static int _whitePieces = 2;
   static int _totalMoves = 0;
 
   Game() {
-    //initialize();
-    initializeTester();
+    initialize();
+    //initializeTester();
   }
 
 
