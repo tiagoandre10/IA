@@ -16,8 +16,7 @@ public class Game {
     //initializeTester();
   }
 
-
-  public static int getBlackPieces(){
+  /*public static int getBlackPieces(){
     return _blackPieces;
   }
 
@@ -27,10 +26,7 @@ public class Game {
 
   public static int getTotalMoves(){
     return _totalMoves;
-  }
-
-
-
+  }*/
 
   static void PlayerPlayer() {
       Scanner stdin = new Scanner(System.in);

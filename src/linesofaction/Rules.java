@@ -1,12 +1,10 @@
 package src.linesofaction;
 
 import java.util.*;
-import static src.linesofaction.Game.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Direction.*;
 
 public class Rules {
-
   static List<Integer> visitedWhites = new ArrayList<>();
   static List<Integer> visitedBlacks = new ArrayList<>();
 
@@ -33,7 +31,7 @@ public class Rules {
 
   //Counts the pieces in a row, column or diagonal
   static int PiecesCountAlong(String move, String play) {
-    //Row distance between old row and new row
+    //Row distances between old row and new row
     int dRow = Math.abs(GetRow(move) - GetRow(play));
     //Column distance between old column and new column
     int dCol = Math.abs(GetColumn(play) - GetColumn(move));
@@ -44,31 +42,31 @@ public class Rules {
 
     //Move left or right
     if(dRow == 0){
-      count = piecesAloungHelper(E, row, col);
+      count = piecesAlongHelper(E, row, col);
     }
     //Move up or down
     else if(dCol == 0){
-      count = piecesAloungHelper(N, row, col);
+      count = piecesAlongHelper(N, row, col);
     }
     //Move in a diagonal
     else if(dCol == dRow){
       if(_row > row && _col < col){
-        count = piecesAloungHelper(SW, row, col);
+        count = piecesAlongHelper(SW, row, col);
       }
       else if(_row < row && _col < col){
-        count = piecesAloungHelper(NW, row, col);
+        count = piecesAlongHelper(NW, row, col);
       }
       else if(_row > row && _col > col){
-        count = piecesAloungHelper(SE, row, col);
+        count = piecesAlongHelper(SE, row, col);
       }
       else if(_row < row && _col > col){
-        count = piecesAloungHelper(NE, row, col);
+        count = piecesAlongHelper(NE, row, col);
       }
     }
     return count;
   }
 
-  static int piecesAloungHelper(Direction dir, int row, int col){
+  static int piecesAlongHelper(Direction dir, int row, int col){
     int count = 0;
     if(dir == NOWHERE){
       return (!(board[row][col] == -1) ? 1 : 0);
