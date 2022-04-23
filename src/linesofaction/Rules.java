@@ -8,6 +8,15 @@ public class Rules {
   static List<Integer> visitedWhites = new ArrayList<>();
   static List<Integer> visitedBlacks = new ArrayList<>();
 
+  public static String GetString(int row, int col){
+    int rowValue = row + 'A';
+    char rowChar = (char) rowValue;
+    int colValue = col + 1;
+    char colChar = Character.forDigit(colValue, 10);
+
+    return "" + rowChar + colChar;
+  }
+
   //Gets the column number of the move
   static int GetColumn(String move) {
     return move.toUpperCase().charAt(0) - 'A';
