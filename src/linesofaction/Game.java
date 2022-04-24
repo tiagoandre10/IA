@@ -16,17 +16,29 @@ public class Game {
     //initializeTester();
   }
 
-  /*public static int getBlackPieces(){
-    return _blackPieces;
+  public static int getBlackPieces(int[][] board){
+    int blackPieces = 0;
+    for(int i=0; i<8; i++){
+      for(int j=0; j<8; j++){
+        if(board[i][j] > 0 && board[i][j] < 13) blackPieces++;
+      }
+    }
+    return blackPieces;
   }
 
-  public static int getWhitePieces(){
-    return _whitePieces;
+  public static int getWhitePieces(int[][] board){
+    int whitePieces = 0;
+    for(int i=0; i<8; i++){
+      for(int j=0; j<8; j++){
+        if(board[i][j] > 12 && board[i][j] < 25) whitePieces++;
+      }
+    }
+    return whitePieces;
   }
 
   public static int getTotalMoves(){
     return _totalMoves;
-  }*/
+  }
 
   static void PlayerPlayer() {
       Scanner stdin = new Scanner(System.in);
@@ -167,7 +179,7 @@ public class Game {
           winner = 0;
         }
 
-        winner = GameOver(board, _whitePieces, _blackPieces);
+        winner = GameOver(board);
 
         System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
 

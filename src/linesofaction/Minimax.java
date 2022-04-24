@@ -8,7 +8,9 @@ import static src.linesofaction.Rules.*;
 
 public class Minimax {
     public double minimax(int[][] board, int depth, int turn) {
-        if(depth == 0) {
+        String bestplay;
+
+        if(depth == 0){
             double piecePosition = piecePosition(board, turn), area = area(board, turn);
             Random random = new Random();
             double val = 1000*piecePosition + 2000*area;

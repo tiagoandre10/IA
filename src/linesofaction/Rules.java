@@ -3,6 +3,8 @@ package src.linesofaction;
 import java.util.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Direction.*;
+import static src.linesofaction.Game.getBlackPieces;
+import static src.linesofaction.Game.getWhitePieces;
 
 public class Rules {
   static List<Integer> visitedWhites = new ArrayList<>();
@@ -329,18 +331,20 @@ public class Rules {
   }
 
   //Checks to see if a player has won the game
-  static int GameOver(int[][] board, int totalWhite, int totalBlack) {
+  static int GameOver(int[][] board) {
     boolean foundWhite = false;
     boolean foundBlack = false;
     visitedWhites.clear();
     visitedBlacks.clear();
+    int whitePieces = getWhitePieces(board);
+    int blackPieces = getBlackPieces(board);
 
-    if(totalWhite == 1) {
+    if(whitePieces == 1) {
       System.out.println("Player 2 won the game!!");
       return 2;
     }
 
-    if(totalBlack == 1) {
+    if(blackPieces == 1) {
       System.out.println("Player 1 won the game!!");
       return 1;
     }
@@ -367,12 +371,12 @@ public class Rules {
       }
     }
 
-    if(visitedWhites.size() == totalWhite){
+    if(visitedWhites.size() == whitePieces){
       System.out.println("Player 2 won the game!!");
       return 2;
     }
 
-    if(visitedBlacks.size() == totalBlack){
+    if(visitedBlacks.size() == blackPieces){
       System.out.println("Player 1 won the game!!");
       return 1;
     }
