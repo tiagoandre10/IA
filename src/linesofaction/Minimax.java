@@ -34,8 +34,8 @@ public class Minimax {
         //get all possible moves as children
         ArrayList<int[][]> children = new ArrayList<>();
 
-        for(int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
+        for(int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 if(turn == 1) {
                     if (board[i][j] > 0 && board[i][j] < 13) {
                         for (int k = 0; k < 8; k++) {
@@ -112,7 +112,7 @@ public class Minimax {
         }
     }
 
-    public int[][] bestMove(int[][] board, int depth, double alpha, double beta, int turn){
+    public int[][] bestMove(int[][] board, int depth, int turn){
         double costOfMove = minimax(board,depth,1);
         return finalMove;
     }

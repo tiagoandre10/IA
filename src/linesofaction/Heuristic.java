@@ -19,8 +19,10 @@ public class Heuristic {
         int[][] valueTable =
                 {{-80,-25,-20,-15,-15,-20,-25,-80},
                         {-25,10,10,10,10,10,10,-25},
-                        {-25,10,10,25,25,10,10,-25},
-                        {-25,10,10,25,25,10,10,-25},
+                        {-25,10,15,15,15,15,10,-25},
+                        {-25,10,15,25,25,15,10,-25},
+                        {-25,10,15,25,25,15,10,-25},
+                        {-25,10,15,15,15,15,10,-25},
                         {-25,10,10,10,10,10,10,-25},
                         {-80,-25,-20,-15,-15,-20,-25,-80}};
 
@@ -39,10 +41,10 @@ public class Heuristic {
     // Evaluates according to area of board containing all pieces. Smaller area is better.
     public static double area(int[][]board, int turn){
         int other;
-        if(turn == -1){
-            other = 0;
-        } else {
-            other = -1;
+        if(turn == 1){
+            other = 2;
+        } else if(turn == 2){
+            other = 1;
         }
         ArrayList<Integer> turnX = new ArrayList<>();
         ArrayList<Integer> turnY = new ArrayList<>();
@@ -51,19 +53,37 @@ public class Heuristic {
 
         for(int i = 0; i < 6; i++){
             for(int j =0;j < 6; j++){
-                if(board[i][j] == turn){
-                    if(!turnX.contains(i)){
-                        turnX.add(i);
+                if(turn == 1){
+                    if(board[i][j] > 0 && board[i][j] < 13){
+                        if(!turnX.contains(i)){
+                            turnX.add(i);
+                        }
+                        if(!turnY.contains(j)){
+                            turnY.add(j);
+                        }
+                    }else if(board[i][j] > 12 && board[i][j] < 25){
+                        if(!otherX.contains(i)){
+                            otherX.add(i);
+                        }
+                        if(!otherY.contains(j)) {
+                            otherY.add(j);
+                        }
                     }
-                    if(!turnY.contains(j)){
-                        turnY.add(j);
-                    }
-                }else if(board[i][j] == other){
-                    if(!otherX.contains(i)){
-                        otherX.add(i);
-                    }
-                    if(!otherY.contains(j)){
-                        otherY.add(j);
+                }else if(turn == 2){
+                    if(board[i][j] > 12 && board[i][j] < 25){
+                        if(!turnX.contains(i)){
+                            turnX.add(i);
+                        }
+                        if(!turnY.contains(j)){
+                            turnY.add(j);
+                        }
+                    }else if(board[i][j] > 0 && board[i][j] < 13){
+                        if(!otherX.contains(i)){
+                            otherX.add(i);
+                        }
+                        if(!otherY.contains(j)) {
+                            otherY.add(j);
+                        }
                     }
                 }
             }

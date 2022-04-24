@@ -4,7 +4,7 @@ import java.util.*;
 import static src.linesofaction.Game.*;
 
 public class Menu {
-     static void menu() {
+     static void menu() throws InterruptedException {
         Scanner stdin = new Scanner(System.in);
 
         System.out.print("\033[H\033[2J");
