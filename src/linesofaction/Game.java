@@ -254,6 +254,13 @@ public class Game {
         System.out.println("Player 2 won the game!!!");
       }
 
+      _totalMoves++;
+      //System.out.println(_totalMoves);
+      if (_totalMoves >= 150) {
+        System.out.println("It was a draw!");
+        winner = 0;
+      }
+
     }
     System.exit(0);
   }
