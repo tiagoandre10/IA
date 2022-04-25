@@ -219,7 +219,7 @@ public class Rules {
 
     //Up white piece
     if( row-1 >= 0 && 0 < board[row-1][column] && board[row-1][column] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row+1][column])){
+      if(!visitedWhites.contains(board[row-1][column])){
         visitedWhites.add(board[row-1][column]);
         checkSurroundings(row-1, column, false);
       }
@@ -227,7 +227,7 @@ public class Rules {
 
     //Up black piece
     if(row-1 >= 0 && 12 < board[row-1][column] && board[row-1][column] < 25 && isBlack){
-      if(!visitedBlacks.contains(board[row+1][column])){
+      if(!visitedBlacks.contains(board[row-1][column])){
         visitedBlacks.add(board[row-1][column]);
         checkSurroundings(row-1, column, true);
       }
@@ -265,7 +265,7 @@ public class Rules {
       }
     }
 
-    //Diagonal down right white piece
+    //Diagonal up right white piece
     if( row-1 >= 0 && column+1 < 8 && 0 < board[row-1][column+1] && board[row-1][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row-1][column+1])){
         visitedWhites.add(board[row-1][column+1]);
@@ -273,7 +273,7 @@ public class Rules {
       }
     }
 
-    //Diagonal down right black piece
+    //Diagonal up right black piece
     if(row-1 >= 0 && column+1 < 8 && 12 < board[row-1][column+1] && board[row-1][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row-1][column+1])){
         visitedBlacks.add(board[row-1][column+1]);
@@ -281,7 +281,7 @@ public class Rules {
       }
     }
 
-    //Diagonal down left white piece
+    //Diagonal up left white piece
     if( row-1 >= 0 && column-1 >= 0 && 0 < board[row-1][column-1] && board[row-1][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row-1][column-1])){
         visitedWhites.add(board[row-1][column-1]);
@@ -289,7 +289,7 @@ public class Rules {
       }
     }
 
-    //Diagonal down left black piece
+    //Diagonal up left black piece
     if ( row-1 >= 0 && column-1 >= 0 && 12 < board[row-1][column-1] && board[row-1][column-1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row-1][column-1])){
         visitedBlacks.add(board[row-1][column-1]);
@@ -297,7 +297,7 @@ public class Rules {
       }
     }
 
-    //Diagonal up right white piece
+    //Diagonal down right white piece
     if( row+1 < 8 && column+1 < 8 && 0 < board[row+1][column+1] && board[row+1][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row+1][column+1])){
         visitedWhites.add(board[row+1][column+1]);
@@ -305,7 +305,7 @@ public class Rules {
       }
     }
 
-    //Diagonal up right black piece
+    //Diagonal down right black piece
     if(row+1 < 8 && column+1 < 8 && 12 < board[row+1][column+1] && board[row+1][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row+1][column+1])){
         visitedBlacks.add(board[row+1][column+1]);
@@ -313,7 +313,7 @@ public class Rules {
       }
     }
 
-    //Diagonal up left white piece
+    //Diagonal down left white piece
     if( row+1 < 8 && column-1 >= 0 && 0 < board[row+1][column-1] && board[row+1][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row+1][column-1])){
         visitedWhites.add(board[row+1][column-1]);
@@ -321,7 +321,7 @@ public class Rules {
       }
     }
 
-    //Diagonal up left black piece
+    //Diagonal down left black piece
     if(row+1 < 8 && column-1 >= 0 && 12 < board[row+1][column-1] && board[row+1][column-1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row+1][column-1])){
         visitedBlacks.add(board[row+1][column-1]);
@@ -337,17 +337,15 @@ public class Rules {
     visitedWhites.clear();
     visitedBlacks.clear();
     int whitePieces = getWhitePieces(board);
-    System.out.println("White Pieces: "+ whitePieces);
+    //System.out.println("White Pieces: "+ whitePieces);
     int blackPieces = getBlackPieces(board);
-    System.out.println("Black Pieces: "+ blackPieces);
+    //System.out.println("Black Pieces: "+ blackPieces);
 
     if(whitePieces == 1) {
-      System.out.println("Player 2 won the game!!");
       return 2;
     }
 
     if(blackPieces == 1) {
-      System.out.println("Player 1 won the game!!");
       return 1;
     }
 
@@ -374,12 +372,10 @@ public class Rules {
     }
 
     if(visitedWhites.size() == whitePieces){
-      System.out.println("Player 2 won the game!!");
       return 2;
     }
 
     if(visitedBlacks.size() == blackPieces){
-      System.out.println("Player 1 won the game!!");
       return 1;
     }
 

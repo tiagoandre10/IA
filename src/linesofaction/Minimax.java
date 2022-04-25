@@ -1,6 +1,7 @@
 package src.linesofaction;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static src.linesofaction.Heuristic.*;
@@ -11,6 +12,7 @@ public class Minimax {
     public static ArrayList<int[][]> boardStateTracker;
     public static int[][] finalMove;
     public static int totalDepth;
+    public static int difficulty;
 
     public Minimax(int depth){
         cost = new ArrayList<>();
@@ -22,9 +24,7 @@ public class Minimax {
     public double minimax(int[][] board, int depth, int turn) {
         if(depth == 0 || GameOver(board) != -1){
             double piecePosition = piecePosition(board, turn), area = area(board, turn);
-            Random random = new Random();
             double eval = 2*area + 5*piecePosition;
-            eval = eval + random.nextInt(500);
             //System.out.println(eval);
             return eval;
         }
@@ -114,12 +114,16 @@ public class Minimax {
                 maxEval = Math.max(maxEval, eval);
             }
             if(depth == totalDepth) {
+              List<int[][]> bestMoves = new ArrayList<>();
                 for (int i = 0; i < cost.size(); i++) {
                     if (cost.get(i) == maxEval) {
-                        finalMove = boardStateTracker.get(i);
-                        break;
+                        bestMoves.add(boardStateTracker.get(i));
                     }
                 }
+
+                Random random = new Random();
+
+                finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
 
                 cost.clear();
                 boardStateTracker.clear();

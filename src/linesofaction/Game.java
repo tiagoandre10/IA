@@ -2,6 +2,7 @@ package src.linesofaction;
 
 import java.util.*;
 import static src.linesofaction.Board.*;
+import static src.linesofaction.Menu.menu;
 import static src.linesofaction.Rules.*;
 
 public class Game {
@@ -40,7 +41,7 @@ public class Game {
     return _totalMoves;
   }
 
-  static void PlayerPlayer() {
+  static void PlayerPlayer() throws InterruptedException {
     Scanner stdin = new Scanner(System.in);
     int player = 1;
     String move, play;
@@ -176,7 +177,18 @@ public class Game {
 
       winner = GameOver(board);
 
+      if(winner == 1){
+        System.out.println("Player 1 won the game!!!");
+      }
+      if(winner == 2){
+        System.out.println("Player 2 won the game!!!");
+      }
+
       System.out.println("Play: " + move.toUpperCase() + " -> " + play.toUpperCase());
+
+      if(winner == 1 || winner == 2){
+        status();
+      }
 
       if (player == 1)
         player = 2;
@@ -184,6 +196,7 @@ public class Game {
       else
         player = 1;
     }
+    menu();
   }
 
   static void PlayerComputer() {
@@ -203,7 +216,8 @@ public class Game {
     while (winner == -1) {
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
-      src.linesofaction.Minimax minimax = new src.linesofaction.Minimax(4);
+      Minimax minimax = new Minimax(4);
+      //Minimax minimax2 = new Minimax(3, 3);
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -217,7 +231,7 @@ public class Game {
             board[i][j] = result[i][j];
           }
         }
-      } else if(player == 2){
+      } else {
         result = minimax.bestMove(copy, 4, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
@@ -233,6 +247,13 @@ public class Game {
       }
       status();
       winner = GameOver(board);
+      if(winner == 1){
+        System.out.println("Player 1 won the game!!!");
+      }
+      if(winner == 2){
+        System.out.println("Player 2 won the game!!!");
+      }
     }
+    menu();
   }
 }
