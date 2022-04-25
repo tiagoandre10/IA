@@ -157,14 +157,14 @@ public class Game {
       }
 
       //The player 2 (white) took a piece of the enemy
-      if (board[GetRow(play)][GetColumn(play)] < 25 && board[GetRow(play)][GetColumn(play)] > 12) {
-        _blackPieces--;
-      }
+      //if (board[GetRow(play)][GetColumn(play)] < 25 && board[GetRow(play)][GetColumn(play)] > 12) {
+      //  _blackPieces--;
+      //}
 
       //The player 1 (black) took a piece of the enemy
-      if (board[GetRow(play)][GetColumn(play)] < 13 && board[GetRow(play)][GetColumn(play)] > 0) {
-        _whitePieces--;
-      }
+      //if (board[GetRow(play)][GetColumn(play)] < 13 && board[GetRow(play)][GetColumn(play)] > 0) {
+      //  _whitePieces--;
+      //}
 
       board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
       board[GetRow(move)][GetColumn(move)] = -1;
@@ -199,9 +199,146 @@ public class Game {
     System.exit(0);
   }
 
-  static void PlayerComputer() {
+  static void PlayerComputer() throws InterruptedException {
+    Scanner stdin = new Scanner(System.in);
+    int player = 1;
+    String move, play;
+    int winner = -1;
+
     System.out.print("\033[H\033[2J");
     System.out.flush();
+
+    new Game();
+
+    while (winner == -1) {
+      System.out.print("\n(PLAYER " + player + ")\n\n");
+
+      if(player == 1){
+        status();
+        System.out.print("Piece to move: ");
+        move = stdin.next();
+        System.out.print("Piece destination: ");
+        play = stdin.next();
+
+        boolean differentPlay = false;
+
+        while (!differentPlay) {
+          if (move.equals(play)) {
+            System.out.println("You cannot stay in the same place! Try again!");
+            System.out.print("Piece to move: ");
+            move = stdin.next();
+            System.out.print("Piece destination: ");
+            play = stdin.next();
+          } else {
+            differentPlay = true;
+          }
+        }
+
+        //Checks if the player is trying to move his pieces
+        boolean canMove = false;
+        while (!canMove) {
+          int helperPiece = board[GetRow(move)][GetColumn(move)];
+
+          if (helperPiece < 13) {
+            System.out.println("You can only move the black pieces! Try again!");
+            System.out.print("Piece to move: ");
+            move = stdin.next();
+            System.out.print("Piece destination: ");
+            play = stdin.next();
+          } else {
+            canMove = true;
+          }
+        }
+
+        while (!IsLegal(move, play)) {
+          System.out.println("");
+          System.out.println("");
+          System.out.println("Invalid play! Try again!");
+          System.out.print("Piece to move: ");
+          move = stdin.next();
+          System.out.print("Piece destination: ");
+          play = stdin.next();
+
+          differentPlay = false;
+
+          while (!differentPlay) {
+            if (move.equals(play)) {
+              System.out.println("You cannot stay in the same place! Try again!");
+              System.out.print("Piece to move: ");
+              move = stdin.next();
+              System.out.print("Piece destination: ");
+              play = stdin.next();
+            } else {
+              differentPlay = true;
+            }
+          }
+
+          //Checks if the player is trying to move his pieces
+          canMove = false;
+          while (!canMove) {
+            int helperPiece = board[GetRow(move)][GetColumn(move)];
+            if (helperPiece < 13) {
+              System.out.println("You can only move the black pieces! Try again!");
+              System.out.print("Piece to move: ");
+              move = stdin.next();
+              System.out.print("Piece destination: ");
+              play = stdin.next();
+            } else {
+              canMove = true;
+            }
+          }
+        }
+        board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
+        board[GetRow(move)][GetColumn(move)] = -1;
+      }
+
+      else if(player == 2){
+        status();
+        int[][] result = new int[8][8];
+        //Minimax minimax = new Minimax(4);
+        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
+        int[][] copy = new int[8][8];
+
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
+            copy[i][j] = board[i][j];
+          }
+        }
+
+        //result = minimax.bestMove(copy, 4,1);
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
+        for(int i=0; i<8; i++){
+          for(int j=0; j<8; j++){
+            board[i][j] = result[i][j];
+          }
+        }
+        Thread.sleep(1000);
+      }
+
+      _totalMoves++;
+      if (_totalMoves >= 150) {
+        System.out.println("It was a draw!");
+        winner = 0;
+      }
+
+      winner = GameOver(board);
+
+      if(winner == 1){
+        System.out.println("Player 1 won the game!!!");
+        status();
+      }
+      if(winner == 2){
+        System.out.println("Player 2 won the game!!!");
+        status();
+      }
+
+      if (player == 1)
+        player = 2;
+
+      else
+        player = 1;
+    }
+    System.exit(0);
   }
 
   static void ComputerComputer() throws InterruptedException {
