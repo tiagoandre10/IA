@@ -199,7 +199,7 @@ public class Game {
     System.exit(0);
   }
 
-  static void PlayerComputer() throws InterruptedException {
+  static void PlayerComputer(int difficulty) throws InterruptedException {
     Scanner stdin = new Scanner(System.in);
     int player = 1;
     String move, play;
@@ -295,10 +295,25 @@ public class Game {
       else if(player == 2){
         status();
         int[][] result = new int[8][8];
+
+        int depth=0;
+
+        switch (difficulty) {
+          case 1:
+            depth = 3;
+            break;
+          case 2:
+            depth = 4;
+            break;
+          case 3:
+            depth = 5;
+            break;
+        }
+
         //Minimax
-        //Minimax minimax = new Minimax(4);
+        //Minimax minimax = new Minimax(depth);
         //Minimax with alpha beta cuts
-        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
+        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(depth, difficulty);
         int[][] copy = new int[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -307,9 +322,9 @@ public class Game {
           }
         }
         //Minimax
-        //result = minimax.bestMove(copy, 4,2);
+        //result = minimax.bestMove(copy, depth,2);
         //Minimax with alpha beta cuts
-        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
+        result = minimax.bestMove(copy, depth, Double.MIN_VALUE, Double.MAX_VALUE, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
@@ -358,7 +373,7 @@ public class Game {
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
       //Minimax
-      minimax = new Minimax(4);
+      minimax = new Minimax(4,3);
 
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
@@ -434,7 +449,7 @@ public class Game {
       int[][] result = new int[8][8];
 
       //Minimax with alpha beta cuts
-      minimax = new MinimaxAlphaBeta(4);
+      minimax = new MinimaxAlphaBeta(4,3);
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {

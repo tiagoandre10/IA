@@ -13,13 +13,15 @@ public class MinimaxAlphaBeta {
   public static int[][] finalMove;
   public static int totalDepth;
   public static int totalNodesVisited;
+  public static int difficulty;
 
-  public MinimaxAlphaBeta(int depth){
+  public MinimaxAlphaBeta(int depth, int difficulty){
     cost = new ArrayList<>();
     boardStateTracker = new ArrayList<>();
     finalMove = new int[8][8];
     totalDepth = depth;
     totalNodesVisited = 0;
+    this.difficulty = difficulty;
   }
 
   public double minimax(int[][] board, int depth, double alpha, double beta, int turn) {
@@ -27,10 +29,26 @@ public class MinimaxAlphaBeta {
     if(depth == 0 || GameOver(board) != -1){
         double piecePosition = piecePosition(board, turn), area = area(board, turn);
         int totalPiecesConnected = totalConnectedPieces(board, turn), totalOpponentPieces = totalOpponentPieces(board, turn);
-        double eval = 2*area + 5*piecePosition;
-        eval += 100 * totalPiecesConnected + 50 * totalOpponentPieces;
+        double eval = 0;
+        switch (difficulty) {
+            case 1:
+                eval = 2*area;
+                break;
+            case 2:
+                eval = 2*area + 5*piecePosition;
+                break;
+            case 3:
+                eval = 2*area + 5*piecePosition + 2000*totalPiecesConnected + 300*totalOpponentPieces;
+                break;
+        }
+        //System.out.println(eval);
+        System.out.println("area: " + area);
+        System.out.println("piecePosition: " + piecePosition);
+        System.out.println("totalPiecesConnected: " + totalPiecesConnected);
+        System.out.println("totalOpponentPieces: " + totalOpponentPieces);
         //System.out.println(eval);
         return eval;
+
     }
 
     int[][] childrenBoard = new int[8][8];

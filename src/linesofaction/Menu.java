@@ -27,21 +27,48 @@ public class Menu {
         switch (option) {
           case 1:
             PlayerPlayer();
+            break;
           case 2:
-            PlayerComputer();
+            System.out.println("  ");
+            System.out.println("1. Easy");
+            System.out.println("2. Medium");
+            System.out.println("3. Hard");
+            System.out.println("  ");
+            System.out.print("Option: ");
+
+            int difficulty = stdin.nextInt();
+
+            switch (difficulty) {
+              case 1:
+                PlayerComputer(1);
+                break;
+              case 2:
+                PlayerComputer(2);
+                break;
+              case 3:
+                PlayerComputer(3);
+                break;
+              default:
+                System.out.print("Invalid option!\n" +
+                        "Option: ");
+                break;
+            }
+            break;
           case 3:
             ComputerComputer();
+            break;
           case 4:
             ComputerComputerAlphaBeta();
+            break;
           case 5:
             System.exit(0);
+            break;
           default:
             System.out.print("Invalid option!\n" +
                     "Option: ");
-        }
-
-        if(option == 1 || option == 2 || option == 3 || option == 4)
             break;
+        }
+      System.exit(0);
     }
   }
 }
