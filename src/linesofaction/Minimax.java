@@ -14,38 +14,49 @@ public class Minimax {
     public static int totalDepth;
     public static int totalNodesVisited;
     public static int difficulty;
+    public static int difficultyPlayer2;
 
-    public Minimax(int depth, int difficulty){
+
+    public Minimax(int depth, int difficulty, int difficultyPlayer2){
       cost = new ArrayList<>();
       boardStateTracker = new ArrayList<>();
       finalMove = new int[8][8];
       totalDepth = depth;
       totalNodesVisited = 0;
       this.difficulty = difficulty;
+      this.difficultyPlayer2 = difficultyPlayer2;
     }
 
     public double minimax(int[][] board, int depth, int turn) {
 
         if(depth == 0 || GameOver(board) != -1){
-
-          double piecePosition = piecePosition(board, turn), area = area(board, turn);
-          int totalPiecesConnected = totalConnectedPieces(board, turn), totalOpponentPieces = totalOpponentPieces(board, turn);
-          double eval = 0;
+            double piecePosition = piecePosition(board, turn), area = area(board, turn);
+            int totalPiecesConnected = totalConnectedPieces(board, turn), totalOpponentPieces = totalOpponentPieces(board, turn);
+            double eval = 0;
             switch (difficulty) {
                 case 1:
-                    eval = 2*area;
+                    eval = 10*area + (-200)*totalOpponentPieces;
                     break;
                 case 2:
-                    eval = 2*area + 5*piecePosition;
+                    eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
                     break;
                 case 3:
-                    eval = 2*area + 5*piecePosition + 2000*totalPiecesConnected + 300*totalOpponentPieces;
+                    eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
                     break;
             }
-            if(turn == 2){
-                eval = 2*area;
+            if(turn == 2 || turn == 0){
+                switch (difficultyPlayer2) {
+                    case 1:
+                        eval = 10*area + (-200)*totalOpponentPieces;
+                        break;
+                    case 2:
+                        eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
+                        break;
+                    case 3:
+                        eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
+                        break;
+                }
             }
-          //System.out.println(eval);
           return eval;
         }
 
@@ -98,23 +109,6 @@ public class Minimax {
                                     children.add(helper);
                                     //resets back to parent state
                                     resetToParent(board, childrenBoard);
-                                    /*
-                                    System.out.println("    A   B   C   D   E   F   G   H");
-                                    for(int m = 0; m < 8; m++) {
-                                        System.out.print((char)(56-i) + " | ");
-                                        for(int n = 0; n < 8; n++) {
-                                            if(childrenBoard[m][n] > 12 && childrenBoard[m][n] < 25)
-                                                System.out.print('X' + " | ");
-
-                                            else if(childrenBoard[m][n] > 0  && childrenBoard[m][n] < 13)
-                                                System.out.print('0' + " | ");
-
-                                            else
-                                                System.out.print(' ' + " | ");
-                                        }
-                                        System.out.println();
-                                    }
-                                    */
                                 }
                             }
                         }
@@ -124,7 +118,7 @@ public class Minimax {
         }
         //player1 maximized (black)
         if(turn == 1) {
-            double maxEval = Double.MIN_VALUE;
+            double maxEval = Integer.MIN_VALUE;
             for (int i = 0; i < children.size(); i++) {
               totalNodesVisited++;
               double eval = minimax(children.get(i), depth - 1, 0);
@@ -154,7 +148,7 @@ public class Minimax {
         }
         //player2 minimized (white)
         else if(turn == 0){
-            double minEval = Double.MAX_VALUE;
+            double minEval = Integer.MAX_VALUE;
             for (int i=0; i < children.size(); i++){
               totalNodesVisited++;
               double eval = minimax(children.get(i), depth - 1, 1);
@@ -164,16 +158,10 @@ public class Minimax {
         }
         //player2 maximized (white)
         if(turn == 2) {
-          boolean foundFirstEval = false;
-          //double maxEval = Double.MIN_VALUE;
-          double maxEval = 0;
+          double maxEval = Integer.MIN_VALUE;
           for (int i = 0; i < children.size(); i++) {
             totalNodesVisited++;
             double eval = minimax(children.get(i), depth - 1, -1);
-            if(!foundFirstEval){
-              maxEval = eval;
-              foundFirstEval = true;
-            }
             if(depth == totalDepth) {
               cost.add(eval);
               boardStateTracker.add(children.get(i));
@@ -200,7 +188,7 @@ public class Minimax {
         }
         //player1 minimized (black)
         else {
-            double minEval = Double.MAX_VALUE;
+            double minEval = Integer.MAX_VALUE;
             for (int i=0; i < children.size(); i++){
               totalNodesVisited++;
               double eval = minimax(children.get(i), depth - 1, 2);

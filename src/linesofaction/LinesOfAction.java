@@ -8,7 +8,7 @@ public class LinesOfAction {
       //Playing mode
       menu();
 
-      //Calculating results mode
+      //Calculating results mode - SHOULD BE COMMENTED (only for computing experimental results)
       //results();
     }
 }
