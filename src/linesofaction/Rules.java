@@ -3,18 +3,20 @@ package src.linesofaction;
 import java.util.*;
 import static src.linesofaction.Board.*;
 import static src.linesofaction.Direction.*;
+import static src.linesofaction.Game.getBlackPieces;
+import static src.linesofaction.Game.getWhitePieces;
 
 public class Rules {
-  static List<Integer> visitedWhites = new ArrayList<>();
-  static List<Integer> visitedBlacks = new ArrayList<>();
+  static List<Integer> _visitedWhites = new ArrayList<>();
+  static List<Integer> _visitedBlacks = new ArrayList<>();
 
   public static String GetString(int row, int col){
-    int rowValue = row + 'A';
-    char rowChar = (char) rowValue;
-    int colValue = col + 1;
-    char colChar = Character.forDigit(colValue, 10);
+    int rowValue =  8 - row ;
+    char rowChar = Character.forDigit(rowValue, 10);
+    int colValue = col + 'A';
+    char colChar = (char) colValue;
 
-    return "" + rowChar + colChar;
+    return "" + colChar+ rowChar ;
   }
 
   //Gets the column number of the move
@@ -28,18 +30,18 @@ public class Rules {
   }
 
   //Check if a move is legal
-  static boolean IsLegal(String move, String play) {
+  static boolean IsLegal(String move, String play, int[][] board) {
     int old_row = GetRow(move), old_col = GetColumn(move);
     int new_row = GetRow(play), new_col = GetColumn(play);
 
-    int possible_move = PiecesCountAlong(move, play);
+    int possible_move = PiecesCountAlong(move, play, board);
     int required_move = Math.max(Math.abs(new_row - old_row), Math.abs(new_col - old_col));
 
-    return ((possible_move != 0) &&(possible_move == required_move) && !blocked(move, play));
+    return ((possible_move != 0) &&(possible_move == required_move) && !blocked(move, play, board));
   }
 
   //Counts the pieces in a row, column or diagonal
-  static int PiecesCountAlong(String move, String play) {
+  static int PiecesCountAlong(String move, String play, int[][] board) {
     //Row distances between old row and new row
     int dRow = Math.abs(GetRow(move) - GetRow(play));
     //Column distance between old column and new column
@@ -51,31 +53,31 @@ public class Rules {
 
     //Move left or right
     if(dRow == 0){
-      count = piecesAlongHelper(E, row, col);
+      count = piecesAlongHelper(E, row, col, board);
     }
     //Move up or down
     else if(dCol == 0){
-      count = piecesAlongHelper(N, row, col);
+      count = piecesAlongHelper(N, row, col, board);
     }
     //Move in a diagonal
     else if(dCol == dRow){
       if(_row > row && _col < col){
-        count = piecesAlongHelper(SW, row, col);
+        count = piecesAlongHelper(SW, row, col, board);
       }
       else if(_row < row && _col < col){
-        count = piecesAlongHelper(NW, row, col);
+        count = piecesAlongHelper(NW, row, col, board);
       }
       else if(_row > row && _col > col){
-        count = piecesAlongHelper(SE, row, col);
+        count = piecesAlongHelper(SE, row, col, board);
       }
       else if(_row < row && _col > col){
-        count = piecesAlongHelper(NE, row, col);
+        count = piecesAlongHelper(NE, row, col, board);
       }
     }
     return count;
   }
 
-  static int piecesAlongHelper(Direction dir, int row, int col){
+  static int piecesAlongHelper(Direction dir, int row, int col, int[][] board){
     int count = 0;
     if(dir == NOWHERE){
       return (!(board[row][col] == -1) ? 1 : 0);
@@ -162,7 +164,7 @@ public class Rules {
   }
 
   //Checks if we can't make the play because we are blocked
-  static boolean blocked(String move, String play) {
+  static boolean blocked(String move, String play, int[][] board) {
     if(move.equals(play)){
       return true;
     }
@@ -197,13 +199,13 @@ public class Rules {
     return false;
   }
 
-  static void checkSurroundings( int row, int column, boolean isBlack){
+  static void checkSurroundings( int row, int column, boolean isBlack, int[][] board, List<Integer> visitedWhites, List<Integer> visitedBlacks){
 
     //Down white piece
     if( (row+1 < 8 && 0 < board[row+1][column] && board[row+1][column] < 13 && !isBlack)){
       if(!visitedWhites.contains(board[row+1][column])){
         visitedWhites.add(board[row+1][column]);
-        checkSurroundings(row+1, column, false);
+        checkSurroundings(row+1, column, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -211,23 +213,23 @@ public class Rules {
     if((row+1 < 8 && 12 < board[row+1][column] && board[row+1][column] < 25 && isBlack)){
       if(!visitedBlacks.contains(board[row+1][column])){
         visitedBlacks.add(board[row+1][column]);
-        checkSurroundings(row+1, column, true);
+        checkSurroundings(row+1, column, true, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Up white piece
     if( row-1 >= 0 && 0 < board[row-1][column] && board[row-1][column] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row+1][column])){
+      if(!visitedWhites.contains(board[row-1][column])){
         visitedWhites.add(board[row-1][column]);
-        checkSurroundings(row-1, column, false);
+        checkSurroundings(row-1, column, false, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Up black piece
     if(row-1 >= 0 && 12 < board[row-1][column] && board[row-1][column] < 25 && isBlack){
-      if(!visitedBlacks.contains(board[row+1][column])){
+      if(!visitedBlacks.contains(board[row-1][column])){
         visitedBlacks.add(board[row-1][column]);
-        checkSurroundings(row-1, column, true);
+        checkSurroundings(row-1, column, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -235,7 +237,7 @@ public class Rules {
     if( column-1 >= 0 && 0 < board[row][column-1] && board[row][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row][column-1])){
         visitedWhites.add(board[row][column-1]);
-        checkSurroundings(row, column-1, false);
+        checkSurroundings(row, column-1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -243,7 +245,7 @@ public class Rules {
     if (column-1 >= 0 && 12 < board[row][column-1] && board[row][column-1] < 25 && isBlack) {
       if(!visitedBlacks.contains(board[row][column-1])){
         visitedBlacks.add(board[row][column-1]);
-        checkSurroundings(row, column-1, true);
+        checkSurroundings(row, column-1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -251,7 +253,7 @@ public class Rules {
     if( column+1 < 8 && 0 < board[row][column+1] && board[row][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row][column+1])){
         visitedWhites.add(board[row][column+1]);
-        checkSurroundings(row, column+1, false);
+        checkSurroundings(row, column+1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -259,89 +261,91 @@ public class Rules {
     if(column+1 < 8 && 12 < board[row][column+1] && board[row][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row][column+1])){
         visitedBlacks.add(board[row][column+1]);
-        checkSurroundings(row, column+1, true);
-      }
-    }
-
-    //Diagonal down right white piece
-    if( row-1 >= 0 && column+1 < 8 && 0 < board[row-1][column+1] && board[row-1][column+1] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row-1][column+1])){
-        visitedWhites.add(board[row-1][column+1]);
-        checkSurroundings(row-1, column+1, false);
-      }
-    }
-
-    //Diagonal down right black piece
-    if(row-1 >= 0 && column+1 < 8 && 12 < board[row-1][column+1] && board[row-1][column+1] < 25 && isBlack){
-      if(!visitedBlacks.contains(board[row-1][column+1])){
-        visitedBlacks.add(board[row-1][column+1]);
-        checkSurroundings(row-1, column+1, true);
-      }
-    }
-
-    //Diagonal down left white piece
-    if( row-1 >= 0 && column-1 >= 0 && 0 < board[row-1][column-1] && board[row-1][column-1] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row-1][column-1])){
-        visitedWhites.add(board[row-1][column-1]);
-        checkSurroundings(row-1, column-1, false);
-      }
-    }
-
-    //Diagonal down left black piece
-    if ( row-1 >= 0 && column-1 >= 0 && 12 < board[row-1][column-1] && board[row-1][column-1] < 25 && isBlack){
-      if(!visitedBlacks.contains(board[row-1][column-1])){
-        visitedBlacks.add(board[row-1][column-1]);
-        checkSurroundings(row-1, column-1, true);
+        checkSurroundings(row, column+1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Diagonal up right white piece
-    if( row+1 < 8 && column+1 < 8 && 0 < board[row+1][column+1] && board[row+1][column+1] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row+1][column+1])){
-        visitedWhites.add(board[row+1][column+1]);
-        checkSurroundings(row+1, column+1, false);
+    if( row-1 >= 0 && column+1 < 8 && 0 < board[row-1][column+1] && board[row-1][column+1] < 13 && !isBlack){
+      if(!visitedWhites.contains(board[row-1][column+1])){
+        visitedWhites.add(board[row-1][column+1]);
+        checkSurroundings(row-1, column+1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Diagonal up right black piece
-    if(row+1 < 8 && column+1 < 8 && 12 < board[row+1][column+1] && board[row+1][column+1] < 25 && isBlack){
-      if(!visitedBlacks.contains(board[row+1][column+1])){
-        visitedBlacks.add(board[row+1][column+1]);
-        checkSurroundings(row+1, column+1, true);
+    if(row-1 >= 0 && column+1 < 8 && 12 < board[row-1][column+1] && board[row-1][column+1] < 25 && isBlack){
+      if(!visitedBlacks.contains(board[row-1][column+1])){
+        visitedBlacks.add(board[row-1][column+1]);
+        checkSurroundings(row-1, column+1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Diagonal up left white piece
-    if( row+1 < 8 && column-1 >= 0 && 0 < board[row+1][column-1] && board[row+1][column-1] < 13 && !isBlack){
-      if(!visitedWhites.contains(board[row+1][column-1])){
-        visitedWhites.add(board[row+1][column-1]);
-        checkSurroundings(row+1, column-1, false);
+    if( row-1 >= 0 && column-1 >= 0 && 0 < board[row-1][column-1] && board[row-1][column-1] < 13 && !isBlack){
+      if(!visitedWhites.contains(board[row-1][column-1])){
+        visitedWhites.add(board[row-1][column-1]);
+        checkSurroundings(row-1, column-1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
     //Diagonal up left black piece
+    if ( row-1 >= 0 && column-1 >= 0 && 12 < board[row-1][column-1] && board[row-1][column-1] < 25 && isBlack){
+      if(!visitedBlacks.contains(board[row-1][column-1])){
+        visitedBlacks.add(board[row-1][column-1]);
+        checkSurroundings(row-1, column-1, true, board, visitedWhites, visitedBlacks);
+      }
+    }
+
+    //Diagonal down right white piece
+    if( row+1 < 8 && column+1 < 8 && 0 < board[row+1][column+1] && board[row+1][column+1] < 13 && !isBlack){
+      if(!visitedWhites.contains(board[row+1][column+1])){
+        visitedWhites.add(board[row+1][column+1]);
+        checkSurroundings(row+1, column+1, false, board, visitedWhites, visitedBlacks);
+      }
+    }
+
+    //Diagonal down right black piece
+    if(row+1 < 8 && column+1 < 8 && 12 < board[row+1][column+1] && board[row+1][column+1] < 25 && isBlack){
+      if(!visitedBlacks.contains(board[row+1][column+1])){
+        visitedBlacks.add(board[row+1][column+1]);
+        checkSurroundings(row+1, column+1, true, board, visitedWhites, visitedBlacks);
+      }
+    }
+
+    //Diagonal down left white piece
+    if( row+1 < 8 && column-1 >= 0 && 0 < board[row+1][column-1] && board[row+1][column-1] < 13 && !isBlack){
+      if(!visitedWhites.contains(board[row+1][column-1])){
+        visitedWhites.add(board[row+1][column-1]);
+        checkSurroundings(row+1, column-1, false, board, visitedWhites, visitedBlacks);
+      }
+    }
+
+    //Diagonal down left black piece
     if(row+1 < 8 && column-1 >= 0 && 12 < board[row+1][column-1] && board[row+1][column-1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row+1][column-1])){
         visitedBlacks.add(board[row+1][column-1]);
-        checkSurroundings(row+1, column-1, true);
+        checkSurroundings(row+1, column-1, true, board, visitedWhites, visitedBlacks);
       }
     }
   }
 
   //Checks to see if a player has won the game
-  static int GameOver(int[][] board, int totalWhite, int totalBlack) {
+  static int GameOver(int[][] board) {
     boolean foundWhite = false;
     boolean foundBlack = false;
-    visitedWhites.clear();
-    visitedBlacks.clear();
+    _visitedWhites.clear();
+    _visitedBlacks.clear();
+    int whitePieces = getWhitePieces(board);
+    //System.out.println("White Pieces: "+ whitePieces);
+    int blackPieces = getBlackPieces(board);
+    //System.out.println("Black Pieces: "+ blackPieces);
 
-    if(totalWhite == 1) {
-      System.out.println("Player 2 won the game!!");
+    if(whitePieces == 1) {
       return 2;
     }
 
-    if(totalBlack == 1) {
-      System.out.println("Player 1 won the game!!");
+    if(blackPieces == 1) {
       return 1;
     }
 
@@ -350,16 +354,16 @@ public class Rules {
         //Check white pieces
         if (board[i][j] > 0 && board[i][j] < 13 && !foundWhite) {
           foundWhite = true;
-          visitedWhites.add(board[i][j]);
-          checkSurroundings(i, j, false);
+          _visitedWhites.add(board[i][j]);
+          checkSurroundings(i, j, false, board, _visitedWhites, _visitedBlacks);
           if(foundBlack){
             break;
           }
         }
         else if (board[i][j] > 12 && board[i][j] < 25 && !foundBlack){
           foundBlack = true;
-          visitedBlacks.add(board[i][j]);
-          checkSurroundings(i, j, true);
+          _visitedBlacks.add(board[i][j]);
+          checkSurroundings(i, j, true, board, _visitedWhites, _visitedBlacks);
           if(foundWhite){
             break;
           }
@@ -367,13 +371,11 @@ public class Rules {
       }
     }
 
-    if(visitedWhites.size() == totalWhite){
-      System.out.println("Player 2 won the game!!");
+    if(_visitedWhites.size() == whitePieces){
       return 2;
     }
 
-    if(visitedBlacks.size() == totalBlack){
-      System.out.println("Player 1 won the game!!");
+    if(_visitedBlacks.size() == blackPieces){
       return 1;
     }
 
