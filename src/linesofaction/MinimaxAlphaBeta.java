@@ -26,7 +26,9 @@ public class MinimaxAlphaBeta {
 
     if(depth == 0 || GameOver(board) != -1){
         double piecePosition = piecePosition(board, turn), area = area(board, turn);
+        int totalPiecesConnected = totalConnectedPieces(board, turn), totalOpponentPieces = totalOpponentPieces(board, turn);
         double eval = 2*area + 5*piecePosition;
+        eval += 100 * totalPiecesConnected + 50 * totalOpponentPieces;
         //System.out.println(eval);
         return eval;
     }
