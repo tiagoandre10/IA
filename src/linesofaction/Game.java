@@ -216,8 +216,8 @@ public class Game {
     while (winner == -1) {
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
-      Minimax minimax = new Minimax(4);
-      //Minimax minimax2 = new Minimax(3, 3);
+      //Minimax minimax = new Minimax(4);
+      MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -225,14 +225,16 @@ public class Game {
         }
       }
       if (player == 1) {
-        result = minimax.bestMove(copy, 4, 1);
+        //result = minimax.bestMove(copy, 4,1);
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 1);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
           }
         }
       } else {
-        result = minimax.bestMove(copy, 4, 2);
+        //result = minimax.bestMove(copy, 4,2);
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE,2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
