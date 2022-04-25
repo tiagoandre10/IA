@@ -14,14 +14,17 @@ public class Minimax {
     public static int totalDepth;
     public static int totalNodesVisited;
     public static int difficulty;
+    public static int difficultyPlayer2;
 
-    public Minimax(int depth, int difficulty){
+
+    public Minimax(int depth, int difficulty, int difficultyPlayer2){
       cost = new ArrayList<>();
       boardStateTracker = new ArrayList<>();
       finalMove = new int[8][8];
       totalDepth = depth;
       totalNodesVisited = 0;
       this.difficulty = difficulty;
+      this.difficultyPlayer2 = difficultyPlayer2;
     }
 
     public double minimax(int[][] board, int depth, int turn) {
@@ -40,6 +43,19 @@ public class Minimax {
                 case 3:
                     eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
                     break;
+            }
+            if(turn == 2 || turn == 0){
+                switch (difficultyPlayer2) {
+                    case 1:
+                        eval = 10*area + (-200)*totalOpponentPieces;
+                        break;
+                    case 2:
+                        eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
+                        break;
+                    case 3:
+                        eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
+                        break;
+                }
             }
             //EASY: eval = 10*area + (-200)*totalOpponentPieces;
             //MEDIUM: eval = 10*area + piecePosition + (-100)*totalOpponentPieces;

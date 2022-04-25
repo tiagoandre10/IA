@@ -12,7 +12,7 @@ public class Results {
     //Minimax Algorithm
     //ComputerComputer();
     //Minimax Alpha Beta Pruning Algorithm
-    ComputerComputerAlphaBeta();
+    ComputerComputerAlphaBeta(3,3);
 
     LocalTime ending = LocalTime.now();
     System.out.printf("Total time: %s seconds%n", beginning.until(ending, ChronoUnit.SECONDS));

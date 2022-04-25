@@ -313,7 +313,7 @@ public class Game {
         //Minimax
         //Minimax minimax = new Minimax(depth);
         //Minimax with alpha beta cuts
-        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(depth, difficulty);
+        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(depth, difficulty, difficulty);
         int[][] copy = new int[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -359,7 +359,7 @@ public class Game {
     System.exit(0);
   }
 
-  static void ComputerComputer() throws InterruptedException {
+  static void ComputerComputer(int difficultyPlayer1, int difficultyPlayer2) throws InterruptedException {
     int player = 1;
     int winner = -1;
 
@@ -373,7 +373,7 @@ public class Game {
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
       //Minimax
-      minimax = new Minimax(4,3);
+      minimax = new Minimax(4,difficultyPlayer1, difficultyPlayer2);
 
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
@@ -434,7 +434,7 @@ public class Game {
     System.exit(0);
   }
 
-  static void ComputerComputerAlphaBeta() throws InterruptedException {
+  static void ComputerComputerAlphaBeta(int difficultyPlayer1, int difficultyPlayer2) throws InterruptedException {
     int player = 1;
     int winner = -1;
 
@@ -449,7 +449,7 @@ public class Game {
       int[][] result = new int[8][8];
 
       //Minimax with alpha beta cuts
-      minimax = new MinimaxAlphaBeta(4,3);
+      minimax = new MinimaxAlphaBeta(4, difficultyPlayer1, difficultyPlayer2);
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
