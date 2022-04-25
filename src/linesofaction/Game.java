@@ -196,7 +196,7 @@ public class Game {
       else
         player = 1;
     }
-    menu();
+    System.exit(0);
   }
 
   static void PlayerComputer() {
@@ -253,7 +253,8 @@ public class Game {
       if(winner == 2){
         System.out.println("Player 2 won the game!!!");
       }
+
     }
-    menu();
+    System.exit(0);
   }
 }
