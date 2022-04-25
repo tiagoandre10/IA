@@ -10,9 +10,9 @@ public class Results {
     LocalTime beginning = LocalTime.now();
 
     //Minimax Algorithm
-    //ComputerComputer();
+    ComputerComputer(2,3);
     //Minimax Alpha Beta Pruning Algorithm
-    ComputerComputerAlphaBeta(3,3);
+    //ComputerComputerAlphaBeta(2,3);
 
     LocalTime ending = LocalTime.now();
     System.out.printf("Total time: %s seconds%n", beginning.until(ending, ChronoUnit.SECONDS));

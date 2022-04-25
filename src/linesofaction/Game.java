@@ -431,7 +431,7 @@ public class Game {
     System.out.println("Average visted nodes per move: " + average);
 
     //Ends the game after a victory - playing mode
-    System.exit(0);
+    //System.exit(0);
   }
 
   static void ComputerComputerAlphaBeta(int difficultyPlayer1, int difficultyPlayer2) throws InterruptedException {
@@ -507,6 +507,6 @@ public class Game {
     System.out.println("Average visted nodes per move: " + average);
 
     //Ends the game after a victory - playing mode
-    System.exit(0);
+    //System.exit(0);
   }
 }
