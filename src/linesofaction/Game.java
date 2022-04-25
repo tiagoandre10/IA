@@ -295,8 +295,10 @@ public class Game {
       else if(player == 2){
         status();
         int[][] result = new int[8][8];
-        //Minimax minimax = new Minimax(4);
-        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
+        //Minimax
+        Minimax minimax = new Minimax(4);
+        //Minimax with alpha beta cuts
+        //MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
         int[][] copy = new int[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -304,9 +306,10 @@ public class Game {
             copy[i][j] = board[i][j];
           }
         }
-
-        //result = minimax.bestMove(copy, 4,1);
-        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
+        //Minimax
+        result = minimax.bestMove(copy, 4,1);
+        //Minimax with alpha beta cuts
+        //result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
@@ -350,11 +353,13 @@ public class Game {
 
     new Game();
 
+    Minimax minimax = null;
     while (winner == -1) {
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
-      //Minimax minimax = new Minimax(4);
-      MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
+      //Minimax
+      minimax = new Minimax(4);
+
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -362,34 +367,33 @@ public class Game {
         }
       }
       if (player == 1) {
-        //result = minimax.bestMove(copy, 4,1);
-        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 1);
-        for(int i=0; i<8; i++){
-          for(int j=0; j<8; j++){
+        //Minimax
+        result = minimax.bestMove(copy, 4, 1);
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
             board[i][j] = result[i][j];
           }
         }
       } else {
-        //result = minimax.bestMove(copy, 4,2);
-        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE,2);
-        for(int i=0; i<8; i++){
-          for(int j=0; j<8; j++){
+        //Minimax
+        result = minimax.bestMove(copy, 4, 2);
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
             board[i][j] = result[i][j];
           }
         }
       }
-      if(player == 1){
+      if (player == 1) {
         player = 2;
-      }
-      else if(player == 2){
+      } else if (player == 2) {
         player = 1;
       }
       status();
       winner = GameOver(board);
-      if(winner == 1){
+      if (winner == 1) {
         System.out.println("Player 1 won the game!!!");
       }
-      if(winner == 2){
+      if (winner == 2) {
         System.out.println("Player 2 won the game!!!");
       }
 
@@ -401,6 +405,90 @@ public class Game {
       }
 
     }
-    System.exit(0);
+    //Ends the game after a victory - playing mode
+    //System.exit(0);
+
+    //Prints the total number of calculated children boards - results mode
+    System.out.println(" ");
+    System.out.println("GAME STATISTICS - Minimax Algorithm");
+    System.out.println(" ");
+    System.out.println("Total nodes visited (all children boards): " + minimax.getTotalNodesVisited());
+    System.out.println("Total moves: " + _totalMoves);
+    int average = minimax.getTotalNodesVisited() / _totalMoves;
+    System.out.println("Average visted nodes per move: " + average);
+  }
+
+  static void ComputerComputerAlphaBeta() throws InterruptedException {
+    int player = 1;
+    int winner = -1;
+
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+
+    new Game();
+
+    MinimaxAlphaBeta minimax = null;
+    while (winner == -1) {
+      System.out.print("\n(PLAYER " + player + ")\n\n");
+      int[][] result = new int[8][8];
+
+      //Minimax with alpha beta cuts
+      minimax = new MinimaxAlphaBeta(4);
+      int[][] copy = new int[8][8];
+      for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+          copy[i][j] = board[i][j];
+        }
+      }
+      if (player == 1) {
+        //Minimax with alpha beta cuts
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 1);
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
+            board[i][j] = result[i][j];
+          }
+        }
+      } else {
+        //Minimax with alpha beta cuts
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE,2);
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 8; j++) {
+            board[i][j] = result[i][j];
+          }
+        }
+      }
+      if (player == 1) {
+        player = 2;
+      } else if (player == 2) {
+        player = 1;
+      }
+      status();
+      winner = GameOver(board);
+      if (winner == 1) {
+        System.out.println("Player 1 won the game!!!");
+      }
+      if (winner == 2) {
+        System.out.println("Player 2 won the game!!!");
+      }
+
+      _totalMoves++;
+      //System.out.println(_totalMoves);
+      if (_totalMoves >= 150) {
+        System.out.println("It was a draw!");
+        winner = 0;
+      }
+
+    }
+    //Ends the game after a victory - playing mode
+    //System.exit(0);
+
+    //Prints the total number of calculated children boards - results mode
+    System.out.println(" ");
+    System.out.println("GAME STATISTICS - Minimax Alpha Beta Pruning Algorithm");
+    System.out.println(" ");
+    System.out.println("Total nodes visited: " + minimax.getTotalNodesVisited());
+    System.out.println("Total moves: " + _totalMoves);
+    int average = minimax.getTotalNodesVisited() / _totalMoves;
+    System.out.println("Average visted nodes per move: " + average);
   }
 }

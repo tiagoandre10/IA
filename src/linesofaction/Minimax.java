@@ -12,13 +12,14 @@ public class Minimax {
     public static ArrayList<int[][]> boardStateTracker;
     public static int[][] finalMove;
     public static int totalDepth;
-    public static int difficulty;
+    public static int totalNodesVisited;
 
     public Minimax(int depth){
-        cost = new ArrayList<>();
-        boardStateTracker = new ArrayList<>();
-        finalMove = new int[8][8];
-        totalDepth = depth;
+      cost = new ArrayList<>();
+      boardStateTracker = new ArrayList<>();
+      finalMove = new int[8][8];
+      totalDepth = depth;
+      totalNodesVisited = 0;
     }
 
     public double minimax(int[][] board, int depth, int turn) {
@@ -45,7 +46,7 @@ public class Minimax {
                                     //moves piece
                                     childrenBoard[k][l] = childrenBoard[i][j];
                                     childrenBoard[i][j] = -1;
-                                    //adds this board state to children
+                                    //adds this board state to list of children boards
                                     int[][] helper = new int[8][8];
                                     for(int m=0; m<8; m++){
                                         for(int n=0; n<8; n++){
@@ -68,7 +69,7 @@ public class Minimax {
                                     //moves piece
                                     childrenBoard[k][l] = childrenBoard[i][j];
                                     childrenBoard[i][j] = -1;
-                                    //adds this board state to children
+                                    //adds this board state to the list of children boards
                                     int[][] helper = new int[8][8];
                                     for(int m=0; m<8; m++){
                                         for(int n=0; n<8; n++){
@@ -102,16 +103,17 @@ public class Minimax {
                 }
             }
         }
-        //player1 maximizado (black)
+        //player1 maximized (black)
         if(turn == 1) {
             double maxEval = Double.MIN_VALUE;
             for (int i = 0; i < children.size(); i++) {
-                double eval = minimax(children.get(i), depth - 1, 0);
-                if(depth == totalDepth) {
-                    cost.add(eval);
-                    boardStateTracker.add(children.get(i));
-                }
-                maxEval = Math.max(maxEval, eval);
+              totalNodesVisited++;
+              double eval = minimax(children.get(i), depth - 1, 0);
+              if(depth == totalDepth) {
+                  cost.add(eval);
+                  boardStateTracker.add(children.get(i));
+              }
+              maxEval = Math.max(maxEval, eval);
             }
             if(depth == totalDepth) {
               List<int[][]> bestMoves = new ArrayList<>();
@@ -131,25 +133,27 @@ public class Minimax {
             }
             return maxEval;
         }
-        //player2 minimizado (white)
+        //player2 minimized (white)
         else if(turn == 0){
             double minEval = Double.MAX_VALUE;
             for (int i=0; i < children.size(); i++){
-                double eval = minimax(children.get(i), depth - 1, 1);
-                minEval = Math.min(minEval, eval);
+              totalNodesVisited++;
+              double eval = minimax(children.get(i), depth - 1, 1);
+              minEval = Math.min(minEval, eval);
             }
             return minEval;
         }
-        //player2 maximizado (white)
+        //player2 maximized (white)
         if(turn == 2) {
             double maxEval = Double.MIN_VALUE;
             for (int i = 0; i < children.size(); i++) {
-                double eval = minimax(children.get(i), depth - 1, -1);
-                if(depth == totalDepth) {
-                    cost.add(eval);
-                    boardStateTracker.add(children.get(i));
-                }
-                maxEval = Math.max(maxEval, eval);
+              totalNodesVisited++;
+              double eval = minimax(children.get(i), depth - 1, -1);
+              if(depth == totalDepth) {
+                  cost.add(eval);
+                  boardStateTracker.add(children.get(i));
+              }
+              maxEval = Math.max(maxEval, eval);
             }
             if(depth == totalDepth) {
                 for (int i = 0; i < cost.size(); i++) {
@@ -165,12 +169,13 @@ public class Minimax {
             }
             return maxEval;
         }
-        //player1 minimizado (black)
+        //player1 minimized (black)
         else {
             double minEval = Double.MAX_VALUE;
             for (int i=0; i < children.size(); i++){
-                double eval = minimax(children.get(i), depth - 1, 2);
-                minEval = Math.min(minEval, eval);
+              totalNodesVisited++;
+              double eval = minimax(children.get(i), depth - 1, 2);
+              minEval = Math.min(minEval, eval);
             }
             return minEval;
         }
@@ -186,6 +191,10 @@ public class Minimax {
         for(int i = 0; i < 8; i++) {
             System.arraycopy(board[i], 0, childrenBoard[i], 0, 8);
         }
+    }
+
+    public int getTotalNodesVisited(){
+      return totalNodesVisited;
     }
 
 }
