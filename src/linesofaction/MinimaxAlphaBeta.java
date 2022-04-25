@@ -45,7 +45,7 @@ public class MinimaxAlphaBeta {
                 if (childrenBoard[i][j] > 12 && childrenBoard[i][j] < 25) {
                     for (int k = 0; k < 8; k++) {
                         for (int l = 0; l < 8; l++) {
-                            if(IsLegal(GetString(i,j), GetString(k,l)) && k != i && j != l) {
+                            if(IsLegal(GetString(i,j), GetString(k,l), childrenBoard) && k != i && j != l) {
                                 //moves piece
                                 childrenBoard[k][l] = childrenBoard[i][j];
                                 childrenBoard[i][j] = -1;
@@ -68,7 +68,7 @@ public class MinimaxAlphaBeta {
                 if (childrenBoard[i][j] > 0 && childrenBoard[i][j] < 13) {
                     for (int k = 0; k < 8; k++) {
                         for (int l = 0; l < 8; l++) {
-                            if(IsLegal(GetString(i,j), GetString(k,l))&& k != i && j != l) {
+                            if(IsLegal(GetString(i,j), GetString(k,l), childrenBoard)  && k != i && j != l) {
                                 //moves piece
                                 childrenBoard[k][l] = childrenBoard[i][j];
                                 childrenBoard[i][j] = -1;
@@ -153,15 +153,18 @@ public class MinimaxAlphaBeta {
           }
         }
         if(depth == totalDepth) {
-            for (int i = 0; i < cost.size(); i++) {
-                if (cost.get(i) == maxEval) {
-                    finalMove = boardStateTracker.get(i);
-                    break;
-                }
-            }
+          List<int[][]> bestMoves = new ArrayList<>();
+          for (int i = 0; i < cost.size(); i++) {
+              if (cost.get(i) == maxEval) {
+                bestMoves.add(boardStateTracker.get(i));
+              }
+          }
 
-            cost.clear();
-            boardStateTracker.clear();
+          Random random = new Random();
+          finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
+
+          cost.clear();
+          boardStateTracker.clear();
 
         }
         return maxEval;

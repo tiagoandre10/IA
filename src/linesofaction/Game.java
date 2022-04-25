@@ -103,7 +103,7 @@ public class Game {
         }
       }
 
-      while (!IsLegal(move, play)) {
+      while (!IsLegal(move, play, board)) {
         System.out.println("");
         System.out.println("");
         System.out.println("Invalid play! Try again!");
@@ -250,7 +250,7 @@ public class Game {
           }
         }
 
-        while (!IsLegal(move, play)) {
+        while (!IsLegal(move, play, board)) {
           System.out.println("");
           System.out.println("");
           System.out.println("Invalid play! Try again!");
@@ -296,9 +296,9 @@ public class Game {
         status();
         int[][] result = new int[8][8];
         //Minimax
-        Minimax minimax = new Minimax(4);
+        //Minimax minimax = new Minimax(4);
         //Minimax with alpha beta cuts
-        //MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
+        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4);
         int[][] copy = new int[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -307,9 +307,9 @@ public class Game {
           }
         }
         //Minimax
-        result = minimax.bestMove(copy, 4,1);
+        //result = minimax.bestMove(copy, 4,2);
         //Minimax with alpha beta cuts
-        //result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
@@ -405,8 +405,6 @@ public class Game {
       }
 
     }
-    //Ends the game after a victory - playing mode
-    //System.exit(0);
 
     //Prints the total number of calculated children boards - results mode
     System.out.println(" ");
@@ -416,6 +414,9 @@ public class Game {
     System.out.println("Total moves: " + _totalMoves);
     int average = minimax.getTotalNodesVisited() / _totalMoves;
     System.out.println("Average visted nodes per move: " + average);
+
+    //Ends the game after a victory - playing mode
+    System.exit(0);
   }
 
   static void ComputerComputerAlphaBeta() throws InterruptedException {
@@ -479,8 +480,7 @@ public class Game {
       }
 
     }
-    //Ends the game after a victory - playing mode
-    //System.exit(0);
+
 
     //Prints the total number of calculated children boards - results mode
     System.out.println(" ");
@@ -490,5 +490,8 @@ public class Game {
     System.out.println("Total moves: " + _totalMoves);
     int average = minimax.getTotalNodesVisited() / _totalMoves;
     System.out.println("Average visted nodes per move: " + average);
+
+    //Ends the game after a victory - playing mode
+    System.exit(0);
   }
 }
