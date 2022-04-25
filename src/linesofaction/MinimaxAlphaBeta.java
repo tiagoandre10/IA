@@ -32,15 +32,22 @@ public class MinimaxAlphaBeta {
         double eval = 0;
         switch (difficulty) {
             case 1:
-                eval = 2*area;
+                eval = 10*area + (-200)*totalOpponentPieces;
                 break;
             case 2:
-                eval = 2*area + 5*piecePosition;
+                eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
                 break;
             case 3:
-                eval = 2*area + 5*piecePosition + 2000*totalPiecesConnected + 300*totalOpponentPieces;
+                eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
                 break;
         }
+        //EASY: eval = 10*area + (-200)*totalOpponentPieces;
+        //MEDIUM: eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
+        //HARD : eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
+        //System.out.println("area " + 20*area);
+        //System.out.println("piecePosition " + 6*piecePosition);
+        //System.out.println("totalPiecesConnected " + 300*totalPiecesConnected );
+        //System.out.println("totalOpponentPieces " + 500*totalOpponentPieces);
         //System.out.println(eval);
         return eval;
 
@@ -104,7 +111,7 @@ public class MinimaxAlphaBeta {
     }
     //player1 maximized (black)
     if(turn == 1) {
-        double maxEval = Double.MIN_VALUE;
+        double maxEval = Integer.MIN_VALUE;
         for (int i = 0; i < children.size(); i++) {
           totalNodesVisited++;
           double eval = minimax(children.get(i), depth - 1, alpha, beta,0);
@@ -137,7 +144,7 @@ public class MinimaxAlphaBeta {
     }
     //player2 minimized (white)
     else if(turn == 0){
-        double minEval = Double.MAX_VALUE;
+        double minEval = Integer.MAX_VALUE;
         for (int i=0; i < children.size(); i++){
           totalNodesVisited++;
           double eval = minimax(children.get(i), depth - 1, alpha, beta, 1);
@@ -151,7 +158,7 @@ public class MinimaxAlphaBeta {
     }
     //player2 maximized (white)
     if(turn == 2) {
-        double maxEval = Double.MIN_VALUE;
+        double maxEval = Integer.MIN_VALUE;
         for (int i = 0; i < children.size(); i++) {
           totalNodesVisited++;
           double eval = minimax(children.get(i), depth - 1, alpha, beta,  -1);
@@ -184,7 +191,7 @@ public class MinimaxAlphaBeta {
     }
     //player1 minimized (black)
     else {
-        double minEval = Double.MAX_VALUE;
+        double minEval = Integer.MAX_VALUE;
         for (int i=0; i < children.size(); i++){
           totalNodesVisited++;
           double eval = minimax(children.get(i), depth - 1, alpha, beta, 2);
