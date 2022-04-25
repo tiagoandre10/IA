@@ -24,18 +24,6 @@ public class Board {
       }
   }
 
-  /*static void initializeTester() {
-    for(int i = 0; i < 8; i++) {
-      for (int j = 0; j < 8; j++) {
-        board[i][j] = -1;
-      }
-    }
-    board[2][4] = 2;
-    board[0][5] = 3;
-    board[7][2] = 14;
-    board[0][0] = 17;
-  }*/
-
   static void status() {
       System.out.println("    A   B   C   D   E   F   G   H");
       for(int i = 0; i < 8; i++) {

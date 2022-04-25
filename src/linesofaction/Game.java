@@ -6,15 +6,10 @@ import static src.linesofaction.Menu.menu;
 import static src.linesofaction.Rules.*;
 
 public class Game {
-  static int _blackPieces = 12;
-  static int _whitePieces = 12;
-  //static int _blackPieces = 2;
-  //static int _whitePieces = 2;
   static int _totalMoves = 0;
 
   Game() {
     initialize();
-    //initializeTester();
   }
 
   public static int getBlackPieces(int[][] board) {
@@ -156,16 +151,6 @@ public class Game {
         }
       }
 
-      //The player 2 (white) took a piece of the enemy
-      //if (board[GetRow(play)][GetColumn(play)] < 25 && board[GetRow(play)][GetColumn(play)] > 12) {
-      //  _blackPieces--;
-      //}
-
-      //The player 1 (black) took a piece of the enemy
-      //if (board[GetRow(play)][GetColumn(play)] < 13 && board[GetRow(play)][GetColumn(play)] > 0) {
-      //  _whitePieces--;
-      //}
-
       board[GetRow(play)][GetColumn(play)] = board[GetRow(move)][GetColumn(move)];
       board[GetRow(move)][GetColumn(move)] = -1;
 
@@ -296,24 +281,8 @@ public class Game {
         status();
         int[][] result = new int[8][8];
 
-        int depth=0;
-
-        switch (difficulty) {
-          case 1:
-            depth = 3;
-            break;
-          case 2:
-            depth = 4;
-            break;
-          case 3:
-            depth = 5;
-            break;
-        }
-
-        //Minimax
-        //Minimax minimax = new Minimax(depth);
         //Minimax with alpha beta cuts
-        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(depth, difficulty, difficulty);
+        MinimaxAlphaBeta minimax = new MinimaxAlphaBeta(4, difficulty, difficulty);
         int[][] copy = new int[8][8];
 
         for (int i = 0; i < 8; i++) {
@@ -321,10 +290,9 @@ public class Game {
             copy[i][j] = board[i][j];
           }
         }
-        //Minimax
-        //result = minimax.bestMove(copy, depth,2);
+
         //Minimax with alpha beta cuts
-        result = minimax.bestMove(copy, depth, Double.MIN_VALUE, Double.MAX_VALUE, 2);
+        result = minimax.bestMove(copy, 4, Double.MIN_VALUE, Double.MAX_VALUE, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
@@ -413,7 +381,6 @@ public class Game {
       }
 
       _totalMoves++;
-      //System.out.println(_totalMoves);
       if (_totalMoves >= 150) {
         System.out.println("It was a draw!");
         winner = 0;
@@ -428,10 +395,10 @@ public class Game {
     System.out.println("Total nodes visited (all children boards): " + minimax.getTotalNodesVisited());
     System.out.println("Total moves: " + _totalMoves);
     int average = minimax.getTotalNodesVisited() / _totalMoves;
-    System.out.println("Average visted nodes per move: " + average);
+    System.out.println("Average visited nodes per move: " + average);
 
     //Ends the game after a victory - playing mode
-    //System.exit(0);
+    System.exit(0);
   }
 
   static void ComputerComputerAlphaBeta(int difficultyPlayer1, int difficultyPlayer2) throws InterruptedException {
@@ -504,9 +471,9 @@ public class Game {
     System.out.println("Total nodes visited: " + minimax.getTotalNodesVisited());
     System.out.println("Total moves: " + _totalMoves);
     int average = minimax.getTotalNodesVisited() / _totalMoves;
-    System.out.println("Average visted nodes per move: " + average);
+    System.out.println("Average visited nodes per move: " + average);
 
     //Ends the game after a victory - playing mode
-    //System.exit(0);
+    System.exit(0);
   }
 }

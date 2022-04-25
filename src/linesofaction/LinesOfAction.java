@@ -6,9 +6,9 @@ import static src.linesofaction.Results.results;
 public class LinesOfAction {
     public static void main(String[] args) throws InterruptedException {
       //Playing mode
-      //menu();
+      menu();
 
-      //Calculating results mode
-      results();
+      //Calculating results mode - SHOULD BE COMMENTED (only for computing experimental results)
+      //results();
     }
 }

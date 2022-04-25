@@ -57,14 +57,6 @@ public class Minimax {
                         break;
                 }
             }
-            //EASY: eval = 10*area + (-200)*totalOpponentPieces;
-            //MEDIUM: eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
-            //HARD : eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
-            //System.out.println("area " + 20*area);
-            //System.out.println("piecePosition " + 6*piecePosition);
-            //System.out.println("totalPiecesConnected " + 300*totalPiecesConnected );
-            //System.out.println("totalOpponentPieces " + 500*totalOpponentPieces);
-            //System.out.println(eval);
           return eval;
         }
 
@@ -117,23 +109,6 @@ public class Minimax {
                                     children.add(helper);
                                     //resets back to parent state
                                     resetToParent(board, childrenBoard);
-                                    /*
-                                    System.out.println("    A   B   C   D   E   F   G   H");
-                                    for(int m = 0; m < 8; m++) {
-                                        System.out.print((char)(56-i) + " | ");
-                                        for(int n = 0; n < 8; n++) {
-                                            if(childrenBoard[m][n] > 12 && childrenBoard[m][n] < 25)
-                                                System.out.print('X' + " | ");
-
-                                            else if(childrenBoard[m][n] > 0  && childrenBoard[m][n] < 13)
-                                                System.out.print('0' + " | ");
-
-                                            else
-                                                System.out.print(' ' + " | ");
-                                        }
-                                        System.out.println();
-                                    }
-                                    */
                                 }
                             }
                         }

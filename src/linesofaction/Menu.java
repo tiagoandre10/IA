@@ -14,7 +14,7 @@ public class Menu {
     System.out.println("%----------  LINES OF ACTION  ----------%");
     System.out.println("  ");
     System.out.println("1. Player vs Player");
-    System.out.println("2. Player vs Computer (Minimax Alpha Beta Pruning Algorithm");
+    System.out.println("2. Player vs Computer (Minimax Alpha Beta Pruning Algorithm)");
     System.out.println("3. Computer vs Computer (Minimax Algorithm)");
     System.out.println("4. Computer vs Computer (Minimax Alpha Beta Pruning Algorithm)");
     System.out.println("5. Exit");

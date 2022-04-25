@@ -139,6 +139,7 @@ public class Heuristic {
             maxWhiteConnected = visitedWhites.size();
           }
         }
+        //Check black pieces
         else if (board[i][j] > 12 && board[i][j] < 25){
           visitedBlacks.clear();
           visitedBlacks.add(board[i][j]);

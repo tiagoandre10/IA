@@ -57,16 +57,7 @@ public class MinimaxAlphaBeta {
             }
         }
 
-        //EASY: eval = 10*area + (-200)*totalOpponentPieces;
-        //MEDIUM: eval = 10*area + piecePosition + (-100)*totalOpponentPieces;
-        //HARD : eval = 10*area + 2*piecePosition + 500*totalPiecesConnected + 500*totalOpponentPieces;
-        //System.out.println("area " + 20*area);
-        //System.out.println("piecePosition " + 6*piecePosition);
-        //System.out.println("totalPiecesConnected " + 300*totalPiecesConnected );
-        //System.out.println("totalOpponentPieces " + 500*totalOpponentPieces);
-        //System.out.println(eval);
         return eval;
-
     }
 
     int[][] childrenBoard = new int[8][8];
@@ -160,63 +151,63 @@ public class MinimaxAlphaBeta {
     }
     //player2 minimized (white)
     else if(turn == 0){
-        double minEval = Integer.MAX_VALUE;
-        for (int i=0; i < children.size(); i++){
-          totalNodesVisited++;
-          double eval = minimax(children.get(i), depth - 1, alpha, beta, 1);
-          minEval = Math.min(minEval, eval);
-          beta = Math.min(beta,eval);
-          if (beta <= alpha){
-              break;
-          }
+      double minEval = Integer.MAX_VALUE;
+      for (int i=0; i < children.size(); i++){
+        totalNodesVisited++;
+        double eval = minimax(children.get(i), depth - 1, alpha, beta, 1);
+        minEval = Math.min(minEval, eval);
+        beta = Math.min(beta,eval);
+        if (beta <= alpha){
+            break;
         }
-        return minEval;
+      }
+      return minEval;
     }
     //player2 maximized (white)
     if(turn == 2) {
-        double maxEval = Integer.MIN_VALUE;
-        for (int i = 0; i < children.size(); i++) {
-          totalNodesVisited++;
-          double eval = minimax(children.get(i), depth - 1, alpha, beta,  -1);
-          if(depth == totalDepth) {
-              cost.add(eval);
-              boardStateTracker.add(children.get(i));
-          }
-          maxEval = Math.max(maxEval, eval);
-          alpha = Math.max(alpha, eval);
-          if (beta <= alpha){
-              break;
-          }
-        }
+      double maxEval = Integer.MIN_VALUE;
+      for (int i = 0; i < children.size(); i++) {
+        totalNodesVisited++;
+        double eval = minimax(children.get(i), depth - 1, alpha, beta,  -1);
         if(depth == totalDepth) {
-          List<int[][]> bestMoves = new ArrayList<>();
-          for (int i = 0; i < cost.size(); i++) {
-              if (cost.get(i) == maxEval) {
-                bestMoves.add(boardStateTracker.get(i));
-              }
-          }
-
-          Random random = new Random();
-          finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
-
-          cost.clear();
-          boardStateTracker.clear();
-
+            cost.add(eval);
+            boardStateTracker.add(children.get(i));
         }
-        return maxEval;
+        maxEval = Math.max(maxEval, eval);
+        alpha = Math.max(alpha, eval);
+        if (beta <= alpha){
+            break;
+        }
+      }
+      if(depth == totalDepth) {
+        List<int[][]> bestMoves = new ArrayList<>();
+        for (int i = 0; i < cost.size(); i++) {
+            if (cost.get(i) == maxEval) {
+              bestMoves.add(boardStateTracker.get(i));
+            }
+        }
+
+        Random random = new Random();
+        finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
+
+        cost.clear();
+        boardStateTracker.clear();
+
+      }
+      return maxEval;
     }
     //player1 minimized (black)
     else {
-        double minEval = Integer.MAX_VALUE;
-        for (int i=0; i < children.size(); i++){
-          totalNodesVisited++;
-          double eval = minimax(children.get(i), depth - 1, alpha, beta, 2);
-          minEval = Math.min(minEval, eval);
-          if (beta <= alpha){
-              break;
-          }
+      double minEval = Integer.MAX_VALUE;
+      for (int i=0; i < children.size(); i++){
+        totalNodesVisited++;
+        double eval = minimax(children.get(i), depth - 1, alpha, beta, 2);
+        minEval = Math.min(minEval, eval);
+        if (beta <= alpha){
+            break;
         }
-        return minEval;
+      }
+      return minEval;
     }
   }
 
