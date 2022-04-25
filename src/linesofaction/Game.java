@@ -20,7 +20,7 @@ public class Game {
     int blackPieces = 0;
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        if (board[i][j] > 0 && board[i][j] < 13) blackPieces++;
+        if (board[i][j] > 12 && board[i][j] < 25) blackPieces++;
       }
     }
     return blackPieces;
@@ -30,7 +30,7 @@ public class Game {
     int whitePieces = 0;
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        if (board[i][j] > 12 && board[i][j] < 25) whitePieces++;
+        if (board[i][j] > 0 && board[i][j] < 13) whitePieces++;
       }
     }
     return whitePieces;
@@ -199,11 +199,11 @@ public class Game {
     System.out.flush();
 
     new Game();
+
     while (winner == -1) {
-      status();
       System.out.print("\n(PLAYER " + player + ")\n\n");
       int[][] result = new int[8][8];
-      src.linesofaction.Minimax minimax = new src.linesofaction.Minimax(3);
+      src.linesofaction.Minimax minimax = new src.linesofaction.Minimax(4);
       int[][] copy = new int[8][8];
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -211,26 +211,27 @@ public class Game {
         }
       }
       if (player == 1) {
-        result = minimax.bestMove(copy, 3, 1);
+        result = minimax.bestMove(copy, 4, 1);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
           }
         }
-        Thread.sleep(1000);
-        status();
-        player = 2;
       } else if(player == 2){
-        result = minimax.bestMove(copy, 3, 2);
+        result = minimax.bestMove(copy, 4, 2);
         for(int i=0; i<8; i++){
           for(int j=0; j<8; j++){
             board[i][j] = result[i][j];
           }
         }
-        Thread.sleep(1000);
-        status();
+      }
+      if(player == 1){
+        player = 2;
+      }
+      else if(player == 2){
         player = 1;
       }
+      status();
       winner = GameOver(board);
     }
   }

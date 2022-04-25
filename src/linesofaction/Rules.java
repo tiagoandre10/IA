@@ -337,7 +337,9 @@ public class Rules {
     visitedWhites.clear();
     visitedBlacks.clear();
     int whitePieces = getWhitePieces(board);
+    System.out.println("White Pieces: "+ whitePieces);
     int blackPieces = getBlackPieces(board);
+    System.out.println("Black Pieces: "+ blackPieces);
 
     if(whitePieces == 1) {
       System.out.println("Player 2 won the game!!");
