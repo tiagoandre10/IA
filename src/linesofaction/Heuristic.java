@@ -134,7 +134,7 @@ public class Heuristic {
         if (board[i][j] > 0 && board[i][j] < 13) {
           visitedWhites.clear();
           visitedWhites.add(board[i][j]);
-          checkSurroundings(i, j, false, board);
+          checkSurroundings(i, j, false, board, visitedWhites, visitedBlacks);
           if(visitedWhites.size() > maxWhiteConnected){
             maxWhiteConnected = visitedWhites.size();
           }
@@ -142,7 +142,7 @@ public class Heuristic {
         else if (board[i][j] > 12 && board[i][j] < 25){
           visitedBlacks.clear();
           visitedBlacks.add(board[i][j]);
-          checkSurroundings(i, j, true, board);
+          checkSurroundings(i, j, true, board, visitedWhites, visitedBlacks);
           if(visitedBlacks.size() > maxBlackConnected){
             maxBlackConnected = visitedBlacks.size();
           }

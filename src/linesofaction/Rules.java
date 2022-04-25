@@ -7,8 +7,8 @@ import static src.linesofaction.Game.getBlackPieces;
 import static src.linesofaction.Game.getWhitePieces;
 
 public class Rules {
-  static List<Integer> visitedWhites = new ArrayList<>();
-  static List<Integer> visitedBlacks = new ArrayList<>();
+  static List<Integer> _visitedWhites = new ArrayList<>();
+  static List<Integer> _visitedBlacks = new ArrayList<>();
 
   public static String GetString(int row, int col){
     int rowValue =  8 - row ;
@@ -199,13 +199,13 @@ public class Rules {
     return false;
   }
 
-  static void checkSurroundings( int row, int column, boolean isBlack, int[][] board){
+  static void checkSurroundings( int row, int column, boolean isBlack, int[][] board, List<Integer> visitedWhites, List<Integer> visitedBlacks){
 
     //Down white piece
     if( (row+1 < 8 && 0 < board[row+1][column] && board[row+1][column] < 13 && !isBlack)){
       if(!visitedWhites.contains(board[row+1][column])){
         visitedWhites.add(board[row+1][column]);
-        checkSurroundings(row+1, column, false, board);
+        checkSurroundings(row+1, column, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -213,7 +213,7 @@ public class Rules {
     if((row+1 < 8 && 12 < board[row+1][column] && board[row+1][column] < 25 && isBlack)){
       if(!visitedBlacks.contains(board[row+1][column])){
         visitedBlacks.add(board[row+1][column]);
-        checkSurroundings(row+1, column, true, board);
+        checkSurroundings(row+1, column, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -221,7 +221,7 @@ public class Rules {
     if( row-1 >= 0 && 0 < board[row-1][column] && board[row-1][column] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row-1][column])){
         visitedWhites.add(board[row-1][column]);
-        checkSurroundings(row-1, column, false, board);
+        checkSurroundings(row-1, column, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -229,7 +229,7 @@ public class Rules {
     if(row-1 >= 0 && 12 < board[row-1][column] && board[row-1][column] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row-1][column])){
         visitedBlacks.add(board[row-1][column]);
-        checkSurroundings(row-1, column, true, board);
+        checkSurroundings(row-1, column, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -237,7 +237,7 @@ public class Rules {
     if( column-1 >= 0 && 0 < board[row][column-1] && board[row][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row][column-1])){
         visitedWhites.add(board[row][column-1]);
-        checkSurroundings(row, column-1, false, board);
+        checkSurroundings(row, column-1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -245,7 +245,7 @@ public class Rules {
     if (column-1 >= 0 && 12 < board[row][column-1] && board[row][column-1] < 25 && isBlack) {
       if(!visitedBlacks.contains(board[row][column-1])){
         visitedBlacks.add(board[row][column-1]);
-        checkSurroundings(row, column-1, true, board);
+        checkSurroundings(row, column-1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -253,7 +253,7 @@ public class Rules {
     if( column+1 < 8 && 0 < board[row][column+1] && board[row][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row][column+1])){
         visitedWhites.add(board[row][column+1]);
-        checkSurroundings(row, column+1, false, board);
+        checkSurroundings(row, column+1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -261,7 +261,7 @@ public class Rules {
     if(column+1 < 8 && 12 < board[row][column+1] && board[row][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row][column+1])){
         visitedBlacks.add(board[row][column+1]);
-        checkSurroundings(row, column+1, true, board);
+        checkSurroundings(row, column+1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -269,7 +269,7 @@ public class Rules {
     if( row-1 >= 0 && column+1 < 8 && 0 < board[row-1][column+1] && board[row-1][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row-1][column+1])){
         visitedWhites.add(board[row-1][column+1]);
-        checkSurroundings(row-1, column+1, false, board);
+        checkSurroundings(row-1, column+1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -277,7 +277,7 @@ public class Rules {
     if(row-1 >= 0 && column+1 < 8 && 12 < board[row-1][column+1] && board[row-1][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row-1][column+1])){
         visitedBlacks.add(board[row-1][column+1]);
-        checkSurroundings(row-1, column+1, true, board);
+        checkSurroundings(row-1, column+1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -285,7 +285,7 @@ public class Rules {
     if( row-1 >= 0 && column-1 >= 0 && 0 < board[row-1][column-1] && board[row-1][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row-1][column-1])){
         visitedWhites.add(board[row-1][column-1]);
-        checkSurroundings(row-1, column-1, false, board);
+        checkSurroundings(row-1, column-1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -293,7 +293,7 @@ public class Rules {
     if ( row-1 >= 0 && column-1 >= 0 && 12 < board[row-1][column-1] && board[row-1][column-1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row-1][column-1])){
         visitedBlacks.add(board[row-1][column-1]);
-        checkSurroundings(row-1, column-1, true, board);
+        checkSurroundings(row-1, column-1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -301,7 +301,7 @@ public class Rules {
     if( row+1 < 8 && column+1 < 8 && 0 < board[row+1][column+1] && board[row+1][column+1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row+1][column+1])){
         visitedWhites.add(board[row+1][column+1]);
-        checkSurroundings(row+1, column+1, false, board);
+        checkSurroundings(row+1, column+1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -309,7 +309,7 @@ public class Rules {
     if(row+1 < 8 && column+1 < 8 && 12 < board[row+1][column+1] && board[row+1][column+1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row+1][column+1])){
         visitedBlacks.add(board[row+1][column+1]);
-        checkSurroundings(row+1, column+1, true, board);
+        checkSurroundings(row+1, column+1, true, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -317,7 +317,7 @@ public class Rules {
     if( row+1 < 8 && column-1 >= 0 && 0 < board[row+1][column-1] && board[row+1][column-1] < 13 && !isBlack){
       if(!visitedWhites.contains(board[row+1][column-1])){
         visitedWhites.add(board[row+1][column-1]);
-        checkSurroundings(row+1, column-1, false, board);
+        checkSurroundings(row+1, column-1, false, board, visitedWhites, visitedBlacks);
       }
     }
 
@@ -325,7 +325,7 @@ public class Rules {
     if(row+1 < 8 && column-1 >= 0 && 12 < board[row+1][column-1] && board[row+1][column-1] < 25 && isBlack){
       if(!visitedBlacks.contains(board[row+1][column-1])){
         visitedBlacks.add(board[row+1][column-1]);
-        checkSurroundings(row+1, column-1, true, board);
+        checkSurroundings(row+1, column-1, true, board, visitedWhites, visitedBlacks);
       }
     }
   }
@@ -334,8 +334,8 @@ public class Rules {
   static int GameOver(int[][] board) {
     boolean foundWhite = false;
     boolean foundBlack = false;
-    visitedWhites.clear();
-    visitedBlacks.clear();
+    _visitedWhites.clear();
+    _visitedBlacks.clear();
     int whitePieces = getWhitePieces(board);
     //System.out.println("White Pieces: "+ whitePieces);
     int blackPieces = getBlackPieces(board);
@@ -354,16 +354,16 @@ public class Rules {
         //Check white pieces
         if (board[i][j] > 0 && board[i][j] < 13 && !foundWhite) {
           foundWhite = true;
-          visitedWhites.add(board[i][j]);
-          checkSurroundings(i, j, false, board);
+          _visitedWhites.add(board[i][j]);
+          checkSurroundings(i, j, false, board, _visitedWhites, _visitedBlacks);
           if(foundBlack){
             break;
           }
         }
         else if (board[i][j] > 12 && board[i][j] < 25 && !foundBlack){
           foundBlack = true;
-          visitedBlacks.add(board[i][j]);
-          checkSurroundings(i, j, true, board);
+          _visitedBlacks.add(board[i][j]);
+          checkSurroundings(i, j, true, board, _visitedWhites, _visitedBlacks);
           if(foundWhite){
             break;
           }
@@ -371,11 +371,11 @@ public class Rules {
       }
     }
 
-    if(visitedWhites.size() == whitePieces){
+    if(_visitedWhites.size() == whitePieces){
       return 2;
     }
 
-    if(visitedBlacks.size() == blackPieces){
+    if(_visitedBlacks.size() == blackPieces){
       return 1;
     }
 

@@ -25,7 +25,9 @@ public class Minimax {
     }
 
     public double minimax(int[][] board, int depth, int turn) {
+
         if(depth == 0 || GameOver(board) != -1){
+
           double piecePosition = piecePosition(board, turn), area = area(board, turn);
           int totalPiecesConnected = totalConnectedPieces(board, turn), totalOpponentPieces = totalOpponentPieces(board, turn);
           double eval = 0;
@@ -41,7 +43,7 @@ public class Minimax {
                     break;
             }
             if(turn == 2){
-                eval = 0;
+                eval = 2*area;
             }
           //System.out.println(eval);
           return eval;
@@ -162,33 +164,39 @@ public class Minimax {
         }
         //player2 maximized (white)
         if(turn == 2) {
-            double maxEval = Double.MIN_VALUE;
-            for (int i = 0; i < children.size(); i++) {
-              totalNodesVisited++;
-              double eval = minimax(children.get(i), depth - 1, -1);
-              if(depth == totalDepth) {
-                  cost.add(eval);
-                  boardStateTracker.add(children.get(i));
-              }
-              maxEval = Math.max(maxEval, eval);
+          boolean foundFirstEval = false;
+          //double maxEval = Double.MIN_VALUE;
+          double maxEval = 0;
+          for (int i = 0; i < children.size(); i++) {
+            totalNodesVisited++;
+            double eval = minimax(children.get(i), depth - 1, -1);
+            if(!foundFirstEval){
+              maxEval = eval;
+              foundFirstEval = true;
             }
             if(depth == totalDepth) {
-              List<int[][]> bestMoves = new ArrayList<>();
-              for (int i = 0; i < cost.size(); i++) {
-                  if (cost.get(i) == maxEval) {
-                    bestMoves.add(boardStateTracker.get(i));
-                  }
-              }
-
-              Random random = new Random();
-
-              finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
-
-              cost.clear();
-              boardStateTracker.clear();
-
+              cost.add(eval);
+              boardStateTracker.add(children.get(i));
             }
-            return maxEval;
+            maxEval = Math.max(maxEval, eval);
+          }
+          if(depth == totalDepth) {
+            List<int[][]> bestMoves = new ArrayList<>();
+            for (int i = 0; i < cost.size(); i++) {
+                if (cost.get(i) == maxEval) {
+                  bestMoves.add(boardStateTracker.get(i));
+                }
+            }
+
+            Random random = new Random();
+
+            finalMove = bestMoves.get(random.nextInt(bestMoves.size()));
+
+            cost.clear();
+            boardStateTracker.clear();
+
+          }
+          return maxEval;
         }
         //player1 minimized (black)
         else {

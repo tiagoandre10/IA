@@ -42,11 +42,6 @@ public class MinimaxAlphaBeta {
                 break;
         }
         //System.out.println(eval);
-        System.out.println("area: " + area);
-        System.out.println("piecePosition: " + piecePosition);
-        System.out.println("totalPiecesConnected: " + totalPiecesConnected);
-        System.out.println("totalOpponentPieces: " + totalOpponentPieces);
-        //System.out.println(eval);
         return eval;
 
     }
