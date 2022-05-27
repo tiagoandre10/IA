@@ -1,10 +1,10 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 import java.util.*;
-import static src.linesofaction.Board.*;
-import static src.linesofaction.Direction.*;
-import static src.linesofaction.Game.getBlackPieces;
-import static src.linesofaction.Game.getWhitePieces;
+import static Projeto_1.src.linesofaction.Board.*;
+import static Projeto_1.src.linesofaction.Direction.*;
+import static Projeto_1.src.linesofaction.Game.getBlackPieces;
+import static Projeto_1.src.linesofaction.Game.getWhitePieces;
 
 public class Rules {
   static List<Integer> _visitedWhites = new ArrayList<>();

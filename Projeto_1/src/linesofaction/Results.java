@@ -1,6 +1,6 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
-import static src.linesofaction.Game.*;
+import static Projeto_1.src.linesofaction.Game.*;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 

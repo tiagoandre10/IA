@@ -1,7 +1,7 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 import java.util.*;
-import static src.linesofaction.Game.*;
+import static Projeto_1.src.linesofaction.Game.*;
 
 public class Menu {
   static void menu() throws InterruptedException {

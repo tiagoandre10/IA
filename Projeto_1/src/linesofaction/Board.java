@@ -1,4 +1,5 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
+
 public class Board {
   static char[] pieces = new char[]{'X', 'O', ' '};
     static int[][] board = new int[8][8];

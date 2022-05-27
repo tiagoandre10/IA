@@ -1,9 +1,9 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 import java.util.*;
-import static src.linesofaction.Board.*;
-import static src.linesofaction.Menu.menu;
-import static src.linesofaction.Rules.*;
+import static Projeto_1.src.linesofaction.Board.*;
+import static Projeto_1.src.linesofaction.Menu.menu;
+import static Projeto_1.src.linesofaction.Rules.*;
 
 public class Game {
   static int _totalMoves = 0;

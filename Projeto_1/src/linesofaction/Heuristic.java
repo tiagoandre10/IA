@@ -1,10 +1,10 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static src.linesofaction.Rules.checkSurroundings;
+import static Projeto_1.src.linesofaction.Rules.checkSurroundings;
 
 public class Heuristic {
 

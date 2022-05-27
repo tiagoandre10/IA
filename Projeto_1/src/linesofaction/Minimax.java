@@ -1,11 +1,11 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static src.linesofaction.Heuristic.*;
-import static src.linesofaction.Rules.*;
+import static Projeto_1.src.linesofaction.Heuristic.*;
+import static Projeto_1.src.linesofaction.Rules.*;
 
 public class Minimax {
     public static ArrayList<Double> cost;

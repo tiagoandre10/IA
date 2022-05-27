@@ -1,4 +1,4 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
 enum Direction {
     NOWHERE(0, 0),

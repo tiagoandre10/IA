@@ -1,7 +1,7 @@
-package src.linesofaction;
+package Projeto_1.src.linesofaction;
 
-import static src.linesofaction.Menu.*;
-import static src.linesofaction.Results.results;
+import static Projeto_1.src.linesofaction.Menu.*;
+import static Projeto_1.src.linesofaction.Results.results;
 
 public class LinesOfAction {
     public static void main(String[] args) throws InterruptedException {
