@@ -1,6 +1,6 @@
 ## IA Projects
-- [Lines of Action](Projeto%201/README.md)
-- [Sample Telco Customer Churn Dataset](Projeto%202/README.md)
+- [Lines of Action](Project_1/README.md)
+- [Sample Telco Customer Churn Dataset](Project_2/README.md)
 
 ## Group members
 - André Cruz (up201705768@edu.fc.up.pt)
