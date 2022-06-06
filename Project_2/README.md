@@ -4,11 +4,11 @@
 - Tiago André (up201606796@edu.fc.up.pt)
 
 ## Notebooks
-- TelcoCustomerChern.ipnyb
+- TelcoCustomerChern
   - First overview of the data.
   
-- SuperVisedLearning-TelcoCustomerChern.ipnyb
-  - 
+- SuperVisedLearning-TelcoCustomerChern
+  - Aggregation of all algorithms, different results and comparison between them
 
-- BestParameters.ipnyb
+- BestParameters
   - Notebook used to compute the best parameters for each algorithm.
